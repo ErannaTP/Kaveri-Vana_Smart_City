@@ -10,7 +10,8 @@
             margin: 0;
             font-family: 'Poppins', sans-serif;
             color: #fff;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         /* Animated Background */
@@ -20,41 +21,51 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
-            background-size: 400% 400%;
-            animation: gradientMove 15s ease infinite;
+            background: radial-gradient(circle at 50% 50%, #4e54c8, #8f94fb, #4e54c8);
+            background-size: 200% 200%;
+            animation: backgroundAnimation 10s infinite alternate;
             z-index: -1;
         }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes backgroundAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
         }
 
         header {
             text-align: center;
-            padding: 3rem 1rem;
+            padding: 4rem 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin: 2rem auto;
+            max-width: 800px;
         }
 
         header h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin: 0;
+            background: linear-gradient(90deg, #ff7eb3, #ff758c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         header p {
             font-size: 1.5rem;
-            margin-top: 0.5rem;
+            margin-top: 1rem;
+            color: #fff;
         }
 
         section {
             max-width: 800px;
             margin: 2rem auto;
             padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         section h2 {
@@ -113,7 +124,7 @@
     <section>
         <h2>🛠️ Projects</h2>
         <ul>
-            <li><strong>Project 1</strong>: <strong>Kaveri Vana(ಕಾವೇರಿ ವನ)</strong> is a visionary smart city designed to harmonize modern technology with nature. Inspired by the serene flow of the Kaveri River, the city blends advanced infrastructure, sustainable energy solutions, and smart technology to create an eco-friendly, efficient, and vibrant community. Kaveri Vana aims to redefine urban living by focusing on green spaces, intelligent transportation, and seamless connectivity, fostering innovation and sustainability at its core.</li>
+            <li><strong>Project 1</strong>: <strong>Kaveri Vana (ಕಾವೇರಿ ವನ)</strong> is a visionary smart city designed to harmonize modern technology with nature. Inspired by the serene flow of the Kaveri River, the city blends advanced infrastructure, sustainable energy solutions, and smart technology to create an eco-friendly, efficient, and vibrant community. Kaveri Vana aims to redefine urban living by focusing on green spaces, intelligent transportation, and seamless connectivity, fostering innovation and sustainability at its core.</li>
         </ul>
 
         <h2>🚀 Skills</h2>
@@ -147,7 +158,7 @@
             <dd>Arundhati Aralimatti</dd>
 
             <dt>University</dt>
-            <dd>KLE Technological University,Hubballi</dd>
+            <dd>KLE Technological University, Hubballi</dd>
 
             <dt>Portfolio Topic/Domain</dt>
             <dd>Google</dd>
