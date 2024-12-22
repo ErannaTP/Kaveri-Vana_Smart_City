@@ -11,16 +11,26 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background: linear-gradient(120deg, #84fab0, #8fd3f4);
+            animation: gradientBG 10s ease infinite;
             color: #333;
             line-height: 1.6;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         header {
             text-align: center;
             padding: 2rem;
-            background-color: #007BFF;
+            background: rgba(0, 123, 255, 0.8);
             color: #fff;
+            border-radius: 8px;
+            margin: 1rem auto;
+            max-width: 800px;
         }
 
         header h1 {
@@ -102,6 +112,9 @@
             padding: 1rem;
             background-color: #007BFF;
             color: #fff;
+            border-radius: 8px;
+            margin: 1rem auto;
+            max-width: 800px;
         }
 
         footer p {
