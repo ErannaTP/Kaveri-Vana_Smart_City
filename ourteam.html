@@ -11,17 +11,16 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #6a11cb, #2575fc);
             color: #333;
-            padding: 0 1rem;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 1rem;
         }
 
         header {
             text-align: center;
-            margin-top: 2rem;
-            margin-bottom: 1.5rem;
-            padding: 1rem 2rem;
+            margin: 2rem 0;
+            padding: 1rem;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -35,52 +34,35 @@
             margin: 0;
         }
 
-        section {
+        table {
+            width: 100%;
+            max-width: 800px;
+            border-collapse: collapse;
+            margin-top: 1rem;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 10px;
-            padding: 2rem;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            max-width: 800px;
-            width: 100%;
-            margin-bottom: 2rem;
         }
 
-        h2 {
-            font-size: 1.8rem;
-            color: #6a11cb;
-            margin-bottom: 1.5rem;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            background: rgba(240, 240, 240, 0.9);
-            border-radius: 5px;
+        th, td {
             padding: 1rem;
-            margin-bottom: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
-        .name {
-            font-weight: bold;
-            font-size: 1rem;
+        th {
+            background-color: #6a11cb;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        td a {
             color: #2575fc;
-        }
-
-        .usn {
-            font-size: 0.9rem;
-            color: #333;
-            margin-top: 0.3rem;
-            display: block;
-        }
-
-        a {
             text-decoration: none;
+            font-weight: bold;
         }
 
-        a:hover {
+        td a:hover {
             text-decoration: underline;
         }
 
@@ -91,6 +73,7 @@
             color: #fff;
             width: 100%;
             font-size: 0.9rem;
+            margin-top: 2rem;
         }
 
         @media (max-width: 768px) {
@@ -98,12 +81,9 @@
                 font-size: 2rem;
             }
 
-            section {
-                padding: 1.5rem;
-            }
-
-            li {
-                padding: 1rem;
+            th, td {
+                padding: 0.8rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -114,27 +94,37 @@
         <h1>Our Team</h1>
     </header>
 
-    <section>
-        <h2>Team Members</h2>
-        <ul>
-            <li>
-                <a href="https://portfolio.darshan.com" target="_blank" class="name">Darshan Ramanjaneya Talawar</a>
-                <span class="usn">01fe23bcs303</span>
-            </li>
-            <li>
-                <a href="https://portfolio.eranna.com" target="_blank" class="name">Eranna Patil</a>
-                <span class="usn">01fe23bcs304</span>
-            </li>
-            <li>
-                <a href="https://portfolio.sagar.com" target="_blank" class="name">Sagar Suresh Mirje</a>
-                <span class="usn">01fe23bcs287</span>
-            </li>
-            <li>
-                <a href="https://portfolio.vinay.com" target="_blank" class="name">Vinay Madgi</a>
-                <span class="usn">01fe23bcs306</span>
-            </li>
-        </ul>
-    </section>
+    <table>
+        <thead>
+            <tr>
+                <th>Sr. No</th>
+                <th>Name</th>
+                <th>USN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><a href="https://portfolio.darshan.com" target="_blank">Darshan Ramanjaneya Talawar</a></td>
+                <td>01fe23bcs303</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><a href="https://portfolio.eranna.com" target="_blank">Eranna Patil</a></td>
+                <td>01fe23bcs304</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><a href="https://portfolio.sagar.com" target="_blank">Sagar Suresh Mirje</a></td>
+                <td>01fe23bcs287</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><a href="https://portfolio.vinay.com" target="_blank">Vinay Madgi</a></td>
+                <td>01fe23bcs306</td>
+            </tr>
+        </tbody>
+    </table>
 
     <footer>
         &copy; 2024 Eranna Patil. All Rights Reserved.
