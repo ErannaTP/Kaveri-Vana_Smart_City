@@ -12,7 +12,6 @@
             color: #fff;
             overflow-y: auto;
             overflow-x: hidden;
-            background-color: #000; /* Ensure black background */
         }
 
         /* Animated Background */
@@ -22,41 +21,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #000; /* Black background */
-            overflow: hidden; /* Prevents content from overflowing */
+            background: radial-gradient(circle at 50% 50%, #4e54c8, #8f94fb, #4e54c8);
+            background-size: 200% 200%;
+            animation: backgroundAnimation 10s infinite alternate;
             z-index: -1;
         }
 
-        @keyframes snowfall {
+        @keyframes backgroundAnimation {
             0% {
-                transform: translateY(-10px);
-                opacity: 1;
+                background-position: 0% 50%;
             }
             100% {
-                transform: translateY(100vh);
-                opacity: 0;
+                background-position: 100% 50%;
             }
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            left: calc(var(--x) * 100%);
-            width: 10px;
-            height: 10px;
-            background-color: white;
-            border-radius: 50%;
-            animation: snowfall var(--duration) linear infinite;
-        }
-
-        .snowflake:nth-child(even) {
-            --x: 0.2;
-            --duration: 5s;
-        }
-
-        .snowflake:nth-child(odd) {
-            --x: 0.8;
-            --duration: 7s;
         }
 
         header {
@@ -153,17 +130,11 @@
             margin: 0;
             color: #fff;
         }
+
     </style>
 </head>
 <body>
-    <div class="background">
-        <!-- Snowflake Divs -->
-        <div class="snowflake"></div>
-        <div class="snowflake"></div>
-        <div class="snowflake"></div>
-        <div class="snowflake"></div>
-        <div class="snowflake"></div>
-    </div>
+    <div class="background"></div>
 
     <header>
         <h1>Eranna Patil</h1>
