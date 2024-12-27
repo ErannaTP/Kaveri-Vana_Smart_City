@@ -28,6 +28,7 @@
             background-color: rgba(0, 0, 0, 0.6);
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2rem;
         }
         section h2 {
             font-size: 1.8rem;
@@ -39,35 +40,15 @@
             margin: 1rem 0;
             line-height: 1.6;
         }
-        table {
+        .graph-image {
             width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background-color: #1e293b;
-            color: #ffffff;
-            text-align: left;
+            height: auto;
             border-radius: 10px;
-            overflow: hidden;
-        }
-        table th, table td {
-            padding: 1rem;
-            border: 1px solid #ffffff;
-        }
-        table th {
-            background-color: #0ea5e9;
-            color: #ffffff;
-        }
-        table tr:hover td {
-            background-color: #2563eb;
-            color: #ffffff;
+            margin-bottom: 2rem;
         }
         @media screen and (max-width: 768px) {
             section {
                 padding: 1rem;
-            }
-            table th, table td {
-                padding: 0.5rem;
-                font-size: 0.9rem;
             }
         }
     </style>
@@ -76,32 +57,27 @@
     <header>
         <h1>Business Case: Transportation and Tourism</h1>
     </header>
+
     <section>
-        <h2>Use of Algorithms</h2>
+        <h2>Tourism Management</h2>
         <p>
-            In this business case focusing on transportation and tourism, we utilized two key algorithms:
+            In managing efficient tourism solutions, algorithms play a vital role in ensuring seamless operations and optimal resource utilization. For tourism, we utilize:
         </p>
         <ul>
-            <li><strong>BFS (Breadth-First Search):</strong> This algorithm is used for managing efficient travel solutions, especially when exploring connections and routes in a graph-like system. BFS is optimal for scenarios where the shortest path or widest possible exploration is required, ensuring eco-friendly transport solutions like e-bike services are seamlessly integrated.</li>
-            <li><strong>Kruskal’s Algorithm:</strong> Kruskal’s algorithm is employed for managing transportation infrastructure such as efficient road networks, bridges, and public transit hubs. It helps minimize costs while ensuring optimal connectivity and infrastructure reliability in tourism management.</li>
+            <li><strong>BFS (Breadth-First Search):</strong> BFS is used for exploring various travel routes and connections within tourist destinations, ensuring that eco-friendly tourism services like e-bike rentals are accessible and efficiently managed.</li>
         </ul>
+        <img src="https://via.placeholder.com/800x400?text=BFS+Graph+Example" alt="BFS Graph Example" class="graph-image">
     </section>
-    <h2>Business Case Details</h2>
-    <table>
-        <tr>
-            <th>Sr No</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Responsible Person</th>
-            <th>Algorithm Used</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Transportation and Tourism</td>
-            <td>Growing demand for eco-friendly transport and efficient tourism management, like e-bike services and smart travel solutions.</td>
-            <td>Eranna P</td>
-            <td>BFS, Kruskal</td>
-        </tr>
-    </table>
+
+    <section>
+        <h2>Transportation Infrastructure</h2>
+        <p>
+            For transportation infrastructure, the following algorithm is used:
+        </p>
+        <ul>
+            <li><strong>Kruskal’s Algorithm:</strong> Kruskal’s algorithm helps manage transportation networks such as roadways, bridges, and public transit hubs. It optimizes cost-effectiveness and ensures robust connectivity across different transportation modes.</li>
+        </ul>
+        <img src="https://via.placeholder.com/800x400?text=Kruskal+Graph+Example" alt="Kruskal Graph Example" class="graph-image">
+    </section>
 </body>
 </html>
