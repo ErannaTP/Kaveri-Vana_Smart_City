@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Case: Transportation and Tourism</title>
+    <title>Transportation and Tourism - Business Case</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            background: linear-gradient(135deg, #0ea5e9, #3b82f6); /* Gradient Background */
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
             color: #ffffff;
         }
         header {
@@ -77,70 +77,93 @@
         <h1>Business Case: Transportation and Tourism</h1>
     </header>
     <section>
-        <h2>Use Cases and Algorithms</h2>
+        <h2>Subtopics and Use Cases</h2>
+        <p>Below are the key use cases with the associated algorithms and their explanations:</p>
 
+        <h3>i. Public Transport Network Design</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Use Case</th>
                     <th>Algorithm</th>
-                    <th>Description</th>
+                    <th>Use Case</th>
+                    <th>Code Example</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Public Transport Network Design</td>
                     <td>Minimum Spanning Tree (Kruskal’s Algorithm)</td>
                     <td>Design cost-efficient public transport routes (bus/train networks).</td>
+                    <td>
+<pre>
+struct Edge {
+    int u, v, weight;
+};
+bool compare(Edge a, Edge b) {
+    return a.weight < b.weight;
+}
+void kruskalMST(vector<Edge>& edges, int n) {
+    sort(edges.begin(), edges.end(), compare);
+    // Implementation continues...
+}
+</pre>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
-        <pre style="background-color: #0ea5e9; padding: 1rem; border-radius: 5px; overflow-x: auto;">
-KRUSKAL'S CODE
-        </pre>
-
+        <h3>ii. Travel Systems</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Use Case</th>
                     <th>Algorithm</th>
-                    <th>Description</th>
+                    <th>Use Case</th>
+                    <th>Code Example</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Travel Systems</td>
                     <td>Boyer-Moore Algorithm</td>
-                    <td>Identifying locations, road names, or traffic patterns based on text-based inputs and searching for routes, bus/train names, and schedules.</td>
+                    <td>Search for locations, road names, or schedules using text-based inputs.</td>
+                    <td>
+<pre>
+void boyerMooreSearch(string text, string pattern) {
+    int m = pattern.size();
+    int n = text.size();
+    // Preprocess and search logic...
+}
+</pre>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
-        <pre style="background-color: #0ea5e9; padding: 1rem; border-radius: 5px; overflow-x: auto;">
-Boyer-Moore CODE
-        </pre>
-
+        <h3>iii. Emergency Response Routes</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Use Case</th>
                     <th>Algorithm</th>
-                    <th>Description</th>
+                    <th>Use Case</th>
+                    <th>Code Example</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Emergency Response Routes</td>
                     <td>Breadth-First Search (BFS)</td>
-                    <td>Quickly determine the shortest paths for emergency vehicles.</td>
+                    <td>Determine the shortest paths for emergency vehicles.</td>
+                    <td>
+<pre>
+void BFS(int start, vector<vector<int>>& adjList) {
+    queue<int> q;
+    vector<bool> visited(adjList.size(), false);
+    q.push(start);
+    visited[start] = true;
+    // Traverse the graph...
+}
+</pre>
+                    </td>
                 </tr>
             </tbody>
         </table>
-
-        <pre style="background-color: #0ea5e9; padding: 1rem; border-radius: 5px; overflow-x: auto;">
-BFS CODE
-        </pre>
     </section>
 
     <footer>
