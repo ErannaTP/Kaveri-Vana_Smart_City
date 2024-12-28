@@ -41,14 +41,24 @@
             margin: 1rem 0;
             line-height: 1.6;
         }
-        img {
+        .fullscreen-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .fullscreen-container img {
             width: 100%;
-            height: auto;
-            max-height: calc(100vh - 4rem);
-            object-fit: contain;
+            height: 100%;
+            object-fit: cover;
             transform: rotate(90deg);
-            display: block;
-            margin: 0 auto;
+        }
+        .caption {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: #facc15;
         }
         table {
             width: 100%;
@@ -104,13 +114,12 @@
         <h1><span>ಕಾವೇರಿ ವನ (Kaveri Vana)</span></h1>
     </header>
     <section>
-        <h2>Welcome to Smart City Kaveri Vana (ಕಾವೇರಿ ವನ)</h2>
-        <p>
-            <strong>Introduction:</strong> Kaveri Vana (ಕಾವೇರಿ ವನ) is a new smart city being planned over an area of 1500 square kilometers. The goal is to create a modern, efficient, and sustainable city that uses advanced technology to improve the quality of life for its residents. With innovative infrastructure, smart services, and eco-friendly designs, Kaveri Vana aims to become a model for future urban development.
-        </p> 
-        <img 
-            src="WhatsApp Image 2024-12-26 at 15.33.16_632a2308.jpg" 
-            alt="Map of Kaveri Vana Smart City">
+        <div class="fullscreen-container">
+            <img 
+                src="WhatsApp Image 2024-12-26 at 15.33.16_632a2308.jpg" 
+                alt="Map of Kaveri Vana Smart City">
+        </div>
+        <div class="caption">Kaveri Vana Map</div>
     </section>
     <h2>Land Distribution and Budget</h2>
     <table>
