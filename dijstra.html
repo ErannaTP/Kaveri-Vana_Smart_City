@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dijkstra Algorithm</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre;
+        }
+        code {
+            display: block;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Dijkstra Algorithm Code</h2>
+<code>
+#include &lt;bits/stdc++.h&gt;<br>
+using namespace std;<br><br>
+
+class Solution<br>
+{<br>
+    public:<br>
+    vector &lt;int&gt; dijkstra(int V, vector&lt;vector&lt;int&gt;&gt; adj[], int S)<br>
+    {<br>
+        set&lt;pair&lt;int,int&gt;&gt; st; <br>
+        vector&lt;int&gt; dist(V, 1e9); <br><br>
+
+        st.insert({0, S}); <br>
+        dist[S] = 0;<br><br>
+
+        while(!st.empty()) {<br>
+            auto it = *(st.begin()); <br>
+            int node = it.second; <br>
+            int dis = it.first; <br>
+            st.erase(it); <br><br>
+         
+            for(auto it : adj[node]) {<br>
+                int adjNode = it[0]; <br>
+                int edgW = it[1]; <br>
+                
+                if(dis + edgW &lt; dist[adjNode]) {<br>
+                    if(dist[adjNode] != 1e9)<br>
+                        st.erase({dist[adjNode], adjNode}); <br>
+                        
+                    dist[adjNode] = dis + edgW; <br>
+                    st.insert({dist[adjNode], adjNode}); <br>
+                 }<br>
+            }<br>
+        }<br>
+        return dist; <br>
+    }<br>
+};<br><br>
+
+int main()<br>
+{<br>
+    int V = 3, E = 3, S = 2;<br>
+    vector&lt;vector&lt;int&gt;&gt; adj[V];<br>
+    vector&lt;vector&lt;int&gt;&gt; edges;<br>
+    vector&lt;int&gt; v1{1, 1}, v2{2, 6}, v3{2, 3}, v4{0, 1}, v5{1, 3}, v6{0, 6};<br>
+    int i = 0;<br>
+    adj[0].push_back(v1);<br>
+    adj[0].push_back(v2);<br>
+    adj[1].push_back(v3);<br>
+    adj[1].push_back(v4);<br>
+    adj[2].push_back(v5);<br>
+    adj[2].push_back(v6);<br><br>
+
+    Solution obj;<br>
+    vector&lt;int&gt; res = obj.dijkstra(V, adj, S);<br><br>
+
+    for (int i = 0; i &lt; V; i++)<br>
+    {<br>
+        cout &lt;&lt; res[i] &lt;&lt; " ";<br>
+    }<br>
+    cout &lt;&lt; endl;<br>
+    return 0;<br>
+}
+</code>
+
+</body>
+</html>
