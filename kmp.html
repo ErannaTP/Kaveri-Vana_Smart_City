@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMP Algorithm Implementation</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre;
+        }
+        code {
+            display: block;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>KMP Algorithm Implementation Code</h2>
+<code>
+#include &lt;bits/stdc++.h&gt;<br>
+using namespace std;<br><br>
+
+void computeLPSArray(const string&amp; pattern, vector&lt;int&gt;&amp; lps) {<br>
+    int m = pattern.length();<br>
+    int len = 0;<br>
+    lps[0] = 0;<br>
+    int i = 1;<br><br>
+
+    while (i &lt; m) {<br>
+        if (pattern[i] == pattern[len]) {<br>
+            len++;<br>
+            lps[i] = len;<br>
+            i++;<br>
+        } else {<br>
+            if (len != 0) {<br>
+                len = lps[len - 1];<br>
+            } else {<br>
+                lps[i] = 0;<br>
+                i++;<br>
+            }<br>
+        }<br>
+    }<br>
+}<br><br>
+
+void KMPSearch(const string&amp; text, const string&amp; pattern) {<br>
+    int n = text.length();<br>
+    int m = pattern.length();<br><br>
+
+    vector&lt;int&gt; lps(m);<br>
+    computeLPSArray(pattern, lps);<br><br>
+
+    int i = 0; // Index for text<br>
+    int j = 0; // Index for pattern<br><br>
+
+    while (i &lt; n) {<br>
+        if (pattern[j] == text[i]) {<br>
+            i++;<br>
+            j++;<br>
+        }<br>
+        if (j == m) {<br>
+            cout &lt;&lt; "Pattern found at index " &lt;&lt; i - j &lt;&lt; endl;<br>
+            j = lps[j - 1];<br>
+        } else if (i &lt; n &amp;&amp; pattern[j] != text[i]) {<br>
+            if (j != 0) {<br>
+                j = lps[j - 1];<br>
+            } else {<br>
+                i++;<br>
+            }<br>
+        }<br>
+    }<br>
+}<br><br>
+
+int main() {<br>
+    string text = "ababcabcabababd";<br>
+    string pattern = "ababd";<br><br>
+
+    KMPSearch(text, pattern);<br>
+    return 0;<br>
+}
+</code>
+
+</body>
+</html>
