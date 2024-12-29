@@ -3,70 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Course Learning Reflections</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="stylesheet.css">
+    <title>Algorithm Design and Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* Basic Styles */
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
-            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #333;
+            padding: 1rem;
         }
 
         header {
-            background-color: #f4419a;
-            color: white;
             text-align: center;
+            background: #fff;
             padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
         }
 
-        h1 {
-            margin: 0;
+        header h1 {
+            color: #6a11cb;
             font-size: 2.5rem;
         }
 
-        p {
-            font-size: 1.2rem;
-        }
-
         section {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .reflection {
-            background-color: #ffffff;
+            background: #fff;
+            margin: 1rem 0;
             padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .reflection:hover {
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-        }
-
-        h2 {
-            color: #f4419a;
+        section h2 {
+            color: #2575fc;
             font-size: 1.8rem;
             margin-bottom: 1rem;
         }
 
-        ul {
-            list-style: none;
-            padding: 0;
+        section p {
+            margin-bottom: 1rem;
         }
 
-        ul li {
-            background-color: #fbe9f2;
-            padding: 0.75rem;
+        ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        li {
             margin-bottom: 0.5rem;
-            border-radius: 5px;
-            color: #333;
         }
 
         table {
@@ -75,92 +63,136 @@
             margin-top: 1rem;
         }
 
-        table th, table td {
-            padding: 1rem;
-            border: 1px solid #eaeaea;
+        th, td {
+            padding: 0.8rem;
             text-align: left;
+            border: 1px solid #ddd;
         }
 
-        table th {
-            background-color: #f4419a;
+        th {
+            background-color: #6a11cb;
             color: white;
         }
 
-        a {
-            color: #f4419a;
-            text-decoration: none;
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
 
-        a:hover {
-            text-decoration: underline;
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #333;
+            color: #fff;
+            margin-top: 2rem;
         }
 
-        @media (max-width: 600px) {
-            section {
-                grid-template-columns: 1fr;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem;
             }
 
-            h1 {
+            header h1 {
                 font-size: 2rem;
             }
 
-            h2 {
+            section h2 {
                 font-size: 1.5rem;
             }
 
-            p, ul li {
-                font-size: 1rem;
+            th, td {
+                font-size: 0.9rem;
+                padding: 0.6rem;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Course Learning Reflections</h1>
-        <p>Exploring algorithm design, data structures, and their applications in real-world problem-solving, including smart city planning and visualization.</p>
+        <h1>Algorithm Design and Analysis Concepts</h1>
     </header>
 
-    <section>
-        <div class="reflection">
-            <h2>1) Algorithm Design Concepts</h2>
-            <p>Topics like recursion, backtracking, and iteration were applied to solve puzzles (e.g., Sudoku) and simulate real-world phenomena in smart city models.</p>
-        </div>
+    <main>
+        <section>
+            <h2>1. Problems in Nature: Iteration, Recursion, and Backtracking</h2>
+            <p>Nature inspires three main problem-solving approaches:</p>
+            <ul>
+                <li><strong>Iteration:</strong> Repeatedly solving subproblems using loops (e.g., factorial calculation, array traversal).</li>
+                <li><strong>Recursion:</strong> Breaking problems into smaller instances (e.g., Fibonacci sequence, Tower of Hanoi).</li>
+                <li><strong>Backtracking:</strong> Exploring all solutions by eliminating invalid paths (e.g., N-Queens problem, maze navigation, Sudoku).</li>
+            </ul>
+        </section>
 
-        <div class="reflection">
-            <h2>2) Space and Time Efficiency</h2>
-            <p>Understanding the importance of efficient algorithms to process large datasets in smart city analytics and achieve optimized resource management.</p>
-        </div>
+        <section>
+            <h2>2. Space and Time Efficiency</h2>
+            <p>Efficiency measures for algorithms:</p>
+            <ul>
+                <li><strong>Time Efficiency:</strong> How fast an algorithm executes.</li>
+                <li><strong>Space Efficiency:</strong> Memory usage of the algorithm.</li>
+            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Problem Class</th>
+                        <th>Example Algorithms</th>
+                        <th>Order of Growth (Time Complexity)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Constant Time</td>
+                        <td>Accessing an array element</td>
+                        <td>O(1)</td>
+                    </tr>
+                    <tr>
+                        <td>Logarithmic Time</td>
+                        <td>Binary Search</td>
+                        <td>O(log n)</td>
+                    </tr>
+                    <tr>
+                        <td>Linear Time</td>
+                        <td>Linear Search</td>
+                        <td>O(n)</td>
+                    </tr>
+                    <tr>
+                        <td>Linearithmic Time</td>
+                        <td>Merge Sort, Quick Sort</td>
+                        <td>O(n log n)</td>
+                    </tr>
+                    <tr>
+                        <td>Quadratic Time</td>
+                        <td>Bubble Sort, Insertion Sort</td>
+                        <td>O(n²)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
 
-        <div class="reflection">
-            <h2>3) Problem Classes and Growth</h2>
-            <p>Analyzed growth rates (O(n), O(log n), etc.) to predict performance. Practical examples include city traffic simulations using efficient algorithms.</p>
-        </div>
+        <section>
+            <h2>3. Algorithm Design Principles</h2>
+            <p>Key principles guiding efficient algorithm design:</p>
+            <ul>
+                <li><strong>Decomposition:</strong> Breaking problems into manageable sub-problems.</li>
+                <li><strong>Pattern Recognition:</strong> Identifying recurring structures.</li>
+                <li><strong>Abstraction:</strong> Ignoring irrelevant complexities.</li>
+                <li><strong>Lazy Propagation:</strong> Delaying computations until necessary.</li>
+            </ul>
+        </section>
 
-        <div class="reflection">
-            <h2>4) Data Structures</h2>
-            <p>Implemented tree structures (e.g., AVL, Red-Black Trees) for managing hierarchical data, such as utility networks in a smart city.</p>
-        </div>
+        <section>
+            <h2>4. Hierarchical Data and Tree Structures</h2>
+            <p>Tree-based structures manage hierarchical data efficiently:</p>
+            <ul>
+                <li><strong>Binary Tree:</strong> For hierarchical storage.</li>
+                <li><strong>BST:</strong> Efficient searching and insertion.</li>
+                <li><strong>Heap:</strong> Priority queue operations.</li>
+                <li><strong>Trie:</strong> Useful for autocomplete.</li>
+            </ul>
+        </section>
+    </main>
 
-        <div class="reflection">
-            <h2>5) Array Queries</h2>
-            <p>Used segment trees to manage range queries for efficient data analysis in city planning projects.</p>
-        </div>
-
-        <div class="reflection">
-            <h2>6) Trees vs. Graphs</h2>
-            <p>Learned to distinguish between trees and graphs. Applied BFS/DFS to model transportation systems and hierarchical data like file structures.</p>
-        </div>
-
-        <div class="reflection">
-            <h2>7) Sorting and Searching</h2>
-            <p>Practiced various sorting (e.g., Quick Sort, Merge Sort) and searching (Binary Search) techniques, with applications in optimizing city datasets.</p>
-        </div>
-
-        <div class="reflection">
-            <h2>8) Graph Algorithms</h2>
-            <p>Studied graph algorithms like Dijkstra’s and Prim’s to design cost-effective road networks and efficient routing systems.</p>
-        </div>
-    </section>
-
+    <footer>
+        &copy; 2024 Comprehensive Algorithm Guide. All Rights Reserved.
+    </footer>
 </body>
 </html>
