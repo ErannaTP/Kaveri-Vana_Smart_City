@@ -54,39 +54,54 @@
             border: 1px solid #ffffff;
         }
         .bar-container {
-            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin: 2rem 0;
+            height: 300px; /* Adjust for the desired height of the graph */
+            border-left: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            padding: 0 10px;
+            position: relative;
+        }
+        .bar-container:before {
+            content: '0%';
+            position: absolute;
+            bottom: 0;
+            left: -30px;
+            color: #ffffff;
+        }
+        .bar-container:after {
+            content: '100%';
+            position: absolute;
+            top: 0;
+            left: -40px;
+            color: #ffffff;
         }
         .bar-item {
-            position: relative;
-            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 10%; /* Adjust width for spacing between bars */
         }
         .bar {
-            height: 20px;
-            background-color: #ffffff;
-            display: inline-block;
+            width: 50%; /* Adjust width of each bar */
+            background-color: #3b82f6; /* Default bar color */
+            transition: height 0.3s ease;
         }
         .bar-label {
-            position: absolute;
-            left: -220px;
-            top: -5px;
-            color: #ffffff;
-            font-weight: bold;
-        }
-        .axis-label {
+            margin-top: 0.5rem;
             text-align: center;
-            margin-top: 5px;
+            font-size: 0.9rem;
         }
-        .x-axis {
-            height: 2px;
-            background-color: #ffffff;
-            position: relative;
-        }
-        .tick {
-            position: absolute;
-            height: 10px;
-            width: 2px;
-            background-color: #ffffff;
-        }
+        .bar[data-color="#3b82f6"] { background-color: #3b82f6; }
+        .bar[data-color="#06b6d4"] { background-color: #06b6d4; }
+        .bar[data-color="#facc15"] { background-color: #facc15; }
+        .bar[data-color="#ef4444"] { background-color: #ef4444; }
+        .bar[data-color="#22c55e"] { background-color: #22c55e; }
+        .bar[data-color="#f97316"] { background-color: #f97316; }
+        .bar[data-color="#6366f1"] { background-color: #6366f1; }
+        .bar[data-color="#14b8a6"] { background-color: #14b8a6; }
         @media screen and (max-width: 768px) {
             section {
                 padding: 1rem;
@@ -94,8 +109,8 @@
             table, table th, table td {
                 font-size: 0.9rem;
             }
-            .bar-label {
-                left: -180px;
+            .bar-container {
+                height: 200px;
             }
         }
     </style>
@@ -106,54 +121,43 @@
         <h1><span>ಕಾವೇರಿ ವನ (Kaveri Vana)</span></h1>
     </header>
     <section>
-        <h2>Welcome to Smart City Kaveri Vana (ಕಾವೇರಿ ವನ)</h2>
-        <p>
-            <strong style="color: #facc15;">City Name:</strong> <span style="color: #ffffff;">Kaveri Vana</span><br>
-            <strong style="color: #facc15;">Taluk:</strong> <span style="color: #ffffff;">Mysore</span><br>
-            <strong style="color: #facc15;">State:</strong> <span style="color: #ffffff;">Karnataka</span><br>
-            <strong style="color: #facc15;">Country:</strong> <span style="color: #ffffff;">India</span><br>
-            <strong style="color: #facc15;">Pincode:</strong> <span style="color: #ffffff;">570002</span><br>
-            <strong style="color: #facc15;">STD Code:</strong> <span style="color: #ffffff;">0822</span><br>
-            <strong style="color: #facc15;">Time Zone:</strong> <span style="color: #ffffff;">GMT+5:30</span>
-        </p>
-
         <h2>Visual Representation</h2>
-        <!-- Bar Graph -->
+
+        <!-- Land Distribution Graph -->
         <h3>Land Distribution</h3>
         <div class="bar-container">
             <div class="bar-item">
-                <span class="bar-label">Main Green Spaces</span>
-                <div class="bar" style="width: 15%; background-color: #3b82f6;"></div>
+                <div class="bar" style="height: 15%;" data-color="#3b82f6"></div>
+                <span class="bar-label">Green Spaces</span>
             </div>
             <div class="bar-item">
-                <span class="bar-label">Main Residential Areas</span>
-                <div class="bar" style="width: 26%; background-color: #06b6d4;"></div>
+                <div class="bar" style="height: 26%;" data-color="#06b6d4"></div>
+                <span class="bar-label">Residential Areas</span>
             </div>
             <div class="bar-item">
-                <span class="bar-label">Main Commercial Zones</span>
-                <div class="bar" style="width: 9%; background-color: #facc15;"></div>
+                <div class="bar" style="height: 9%;" data-color="#facc15"></div>
+                <span class="bar-label">Commercial Zones</span>
             </div>
             <div class="bar-item">
-                <span class="bar-label">Main Industrial Areas</span>
-                <div class="bar" style="width: 5%; background-color: #ef4444;"></div>
+                <div class="bar" style="height: 5%;" data-color="#ef4444"></div>
+                <span class="bar-label">Industrial Areas</span>
             </div>
             <div class="bar-item">
-                <span class="bar-label">Main Utilities</span>
-                <div class="bar" style="width: 4%; background-color: #22c55e;"></div>
+                <div class="bar" style="height: 4%;" data-color="#22c55e"></div>
+                <span class="bar-label">Utilities</span>
             </div>
             <div class="bar-item">
-                <span class="bar-label">Main Tourist Spots</span>
-                <div class="bar" style="width: 3%; background-color: #f97316;"></div>
+                <div class="bar" style="height: 3%;" data-color="#f97316"></div>
+                <span class="bar-label">Tourist Spots</span>
             </div>
             <div class="bar-item">
-                <span class="bar-label">Main Recreational Areas</span>
-                <div class="bar" style="width: 3%; background-color: #6366f1;"></div>
+                <div class="bar" style="height: 3%;" data-color="#6366f1"></div>
+                <span class="bar-label">Recreational</span>
             </div>
             <div class="bar-item">
+                <div class="bar" style="height: 11%;" data-color="#14b8a6"></div>
                 <span class="bar-label">Transportation</span>
-                <div class="bar" style="width: 11%; background-color: #14b8a6;"></div>
             </div>
-            <div class="x-axis"></div>
         </div>
     </section>
 </body>
