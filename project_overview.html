@@ -54,22 +54,38 @@
             border: 1px solid #ffffff;
         }
         .bar-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
         .bar-item {
-            display: flex;
-            align-items: center;
-            margin: 5px 0;
-        }
-        .bar-label {
-            width: 200px;
+            position: relative;
+            margin: 20px 0;
         }
         .bar {
             height: 20px;
-            margin-left: 10px;
+            background-color: #ffffff;
+            display: inline-block;
+        }
+        .bar-label {
+            position: absolute;
+            left: -220px;
+            top: -5px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .axis-label {
+            text-align: center;
+            margin-top: 5px;
+        }
+        .x-axis {
+            height: 2px;
+            background-color: #ffffff;
+            position: relative;
+        }
+        .tick {
+            position: absolute;
+            height: 10px;
+            width: 2px;
+            background-color: #ffffff;
         }
         @media screen and (max-width: 768px) {
             section {
@@ -77,6 +93,9 @@
             }
             table, table th, table td {
                 font-size: 0.9rem;
+            }
+            .bar-label {
+                left: -180px;
             }
         }
     </style>
@@ -88,8 +107,6 @@
     </header>
     <section>
         <h2>Welcome to Smart City Kaveri Vana (ಕಾವೇರಿ ವನ)</h2>
-        
-        <!-- City Details -->
         <p>
             <strong style="color: #facc15;">City Name:</strong> <span style="color: #ffffff;">Kaveri Vana</span><br>
             <strong style="color: #facc15;">Taluk:</strong> <span style="color: #ffffff;">Mysore</span><br>
@@ -100,87 +117,8 @@
             <strong style="color: #facc15;">Time Zone:</strong> <span style="color: #ffffff;">GMT+5:30</span>
         </p>
 
-        <p>
-            <strong>Introduction:</strong> Kaveri Vana (ಕಾವೇರಿ ವನ) is a new smart city being planned over an area of 1500 square kilometers. The goal is to create a modern, efficient, and sustainable city that uses advanced technology to improve the quality of life for its residents. With innovative infrastructure, smart services, and eco-friendly designs, Kaveri Vana aims to become a model for future urban development.
-        </p>
-
-        <h2>Land Distribution and Budget</h2>
-
-        <!-- Table -->
-        <table>
-            <tr>
-                <th>Sr No</th>
-                <th>Main Land Distribution</th>
-                <th>Subparts</th>
-                <th>Land Distribution %</th>
-                <th>Budget (₹ Crores)</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Main Green Spaces</td>
-                <td>Parks and Gardens, Agriculture Field, Waterfront Green Spaces, Eco-friendly Zones, Green Buffer Zones</td>
-                <td>15%</td>
-                <td>₹1,682.1</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Main Residential Areas</td>
-                <td>Apartments, Villas, Affordable Housing, Schools and Healthcare Centers</td>
-                <td>26%</td>
-                <td>₹2,915.64</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Main Commercial Zones</td>
-                <td>Offices, Retail Spaces, High-Density Business Areas</td>
-                <td>9%</td>
-                <td>₹1,009.26</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Main Industrial Areas</td>
-                <td>Smart Factories, Logistics Hubs</td>
-                <td>5%</td>
-                <td>₹560.7</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Main Utilities and Services</td>
-                <td>Renewable Energy, Water Treatment Facilities</td>
-                <td>4%</td>
-                <td>₹448.56</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>Main Tourist Spots</td>
-                <td>Zoo, Bird Sanctuary</td>
-                <td>3%</td>
-                <td>₹336.42</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>Main Recreational & Cultural Spaces</td>
-                <td>Cultural Centers, Sports Complexes</td>
-                <td>3%</td>
-                <td>₹336.42</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>Main Transportation Infrastructure</td>
-                <td>Roads, Bike Lanes, Smart Public Transport Hubs, Toll Plaza</td>
-                <td>11%</td>
-                <td>₹1,233.54</td>
-            </tr>
-            <tr>
-                <td colspan="4"><strong>Total Budget</strong></td>
-                <td><strong>₹11,214 Crores</strong></td>
-            </tr>
-        </table>
-
-        <!-- Bar Graphs for Land Distribution and Budget -->
         <h2>Visual Representation</h2>
-
-        <!-- Land Distribution Graph -->
+        <!-- Bar Graph -->
         <h3>Land Distribution</h3>
         <div class="bar-container">
             <div class="bar-item">
@@ -215,43 +153,7 @@
                 <span class="bar-label">Transportation</span>
                 <div class="bar" style="width: 11%; background-color: #14b8a6;"></div>
             </div>
-        </div>
-
-        <!-- Budget Distribution Graph -->
-        <h3>Budget Distribution</h3>
-        <div class="bar-container">
-            <div class="bar-item">
-                <span class="bar-label">Main Green Spaces</span>
-                <div class="bar" style="width: 15%; background-color: #3b82f6;"></div>
-            </div>
-            <div class="bar-item">
-                <span class="bar-label">Main Residential Areas</span>
-                <div class="bar" style="width: 26%; background-color: #06b6d4;"></div>
-            </div>
-            <div class="bar-item">
-                <span class="bar-label">Main Commercial Zones</span>
-                <div class="bar" style="width: 9%; background-color: #facc15;"></div>
-            </div>
-            <div class="bar-item">
-                <span class="bar-label">Main Industrial Areas</span>
-                <div class="bar" style="width: 5%; background-color: #ef4444;"></div>
-            </div>
-            <div class="bar-item">
-                <span class="bar-label">Main Utilities</span>
-                <div class="bar" style="width: 4%; background-color: #22c55e;"></div>
-            </div>
-            <div class="bar-item">
-                <span class="bar-label">Main Tourist Spots</span>
-                <div class="bar" style="width: 3%; background-color: #f97316;"></div>
-            </div>
-            <div class="bar-item">
-                <span class="bar-label">Main Recreational Areas</span>
-                <div class="bar" style="width: 3%; background-color: #6366f1;"></div>
-            </div>
-            <div class="bar-item">
-                <span class="bar-label">Transportation</span>
-                <div class="bar" style="width: 11%; background-color: #14b8a6;"></div>
-            </div>
+            <div class="x-axis"></div>
         </div>
     </section>
 </body>
