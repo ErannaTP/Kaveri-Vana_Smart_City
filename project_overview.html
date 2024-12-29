@@ -3,97 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Overview - Kaveri Vana (Smart City)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Vertical Bar Graph - Smart City</title>
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
-            background: linear-gradient(135deg, #3b82f6, #06b6d4);
-            color: #ffffff;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
         }
+
         header {
             text-align: center;
-            padding: 2rem;
-            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            background-color: #4caf50;
+            color: white;
         }
-        header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-        }
-        header h1 span {
-            display: block;
-            font-size: 1.5rem;
-            color: #facc15;
-        }
-        section {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: auto;
-        }
-        section h2, h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #06b6d4;
-            display: inline-block;
-        }
-        section p {
-            margin: 1rem 0;
-            line-height: 1.6;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background-color: #1e293b;
-            color: #ffffff;
-            text-align: left;
-        }
-        table th, table td {
-            padding: 1rem;
-            border: 1px solid #ffffff;
-        }
+
         .bar-container {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin: 2rem 0;
-            height: 300px; /* Adjust for the desired height of the graph */
-            border-left: 2px solid #ffffff;
-            border-bottom: 2px solid #ffffff;
-            padding: 0 10px;
+            margin: 40px auto;
+            height: 300px; /* Height of the graph area */
+            width: 80%; /* Width of the graph area */
+            border-left: 2px solid #333;
+            border-bottom: 2px solid #333;
             position: relative;
         }
+
+        /* Y-axis labels */
         .bar-container:before {
             content: '0%';
             position: absolute;
             bottom: 0;
             left: -30px;
-            color: #ffffff;
         }
+
         .bar-container:after {
             content: '100%';
             position: absolute;
             top: 0;
             left: -40px;
-            color: #ffffff;
         }
+
         .bar-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 10%; /* Adjust width for spacing between bars */
+            width: 10%; /* Adjust width of each bar segment */
         }
+
         .bar {
-            width: 50%; /* Adjust width of each bar */
-            background-color: #3b82f6; /* Default bar color */
+            width: 50%; /* Width of the individual bars */
+            background-color: #4caf50;
             transition: height 0.3s ease;
         }
+
         .bar-label {
-            margin-top: 0.5rem;
+            margin-top: 10px;
             text-align: center;
-            font-size: 0.9rem;
         }
+
+        /* Custom colors for bars */
         .bar[data-color="#3b82f6"] { background-color: #3b82f6; }
         .bar[data-color="#06b6d4"] { background-color: #06b6d4; }
         .bar[data-color="#facc15"] { background-color: #facc15; }
@@ -102,45 +74,30 @@
         .bar[data-color="#f97316"] { background-color: #f97316; }
         .bar[data-color="#6366f1"] { background-color: #6366f1; }
         .bar[data-color="#14b8a6"] { background-color: #14b8a6; }
-        @media screen and (max-width: 768px) {
-            section {
-                padding: 1rem;
-            }
-            table, table th, table td {
-                font-size: 0.9rem;
-            }
-            .bar-container {
-                height: 200px;
-            }
-        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Project Overview</h1>
-        <h1><span>ಕಾವೇರಿ ವನ (Kaveri Vana)</span></h1>
+        <h1>Vertical Bar Graph</h1>
     </header>
     <section>
-        <h2>Visual Representation</h2>
-
-        <!-- Land Distribution Graph -->
-        <h3>Land Distribution</h3>
         <div class="bar-container">
+            <!-- Bar items with percentages -->
             <div class="bar-item">
                 <div class="bar" style="height: 15%;" data-color="#3b82f6"></div>
                 <span class="bar-label">Green Spaces</span>
             </div>
             <div class="bar-item">
                 <div class="bar" style="height: 26%;" data-color="#06b6d4"></div>
-                <span class="bar-label">Residential Areas</span>
+                <span class="bar-label">Residential</span>
             </div>
             <div class="bar-item">
                 <div class="bar" style="height: 9%;" data-color="#facc15"></div>
-                <span class="bar-label">Commercial Zones</span>
+                <span class="bar-label">Commercial</span>
             </div>
             <div class="bar-item">
                 <div class="bar" style="height: 5%;" data-color="#ef4444"></div>
-                <span class="bar-label">Industrial Areas</span>
+                <span class="bar-label">Industrial</span>
             </div>
             <div class="bar-item">
                 <div class="bar" style="height: 4%;" data-color="#22c55e"></div>
