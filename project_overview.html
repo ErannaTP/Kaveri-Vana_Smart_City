@@ -53,6 +53,24 @@
             padding: 1rem;
             border: 1px solid #ffffff;
         }
+        .bar-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .bar-label {
+            width: 150px;
+            text-align: left;
+            padding-right: 1rem;
+        }
+        .bar {
+            flex-grow: 1;
+            background-color: #3b82f6;
+            height: 20px;
+        }
+        .bar[data-percent] {
+            width: var(--bar-width);
+        }
         @media screen and (max-width: 768px) {
             section {
                 padding: 1rem;
@@ -69,11 +87,11 @@
         <h1><span>ಕಾವೇರಿ ವನ (Kaveri Vana)</span></h1>
     </header>
     <section>
-        <h2>Welcome to Smart City ಕಾವೇರಿ ವನ (Kaveri Vana)</h2>
+        <h2>Welcome to Smart City Kaveri Vana (ಕಾವೇರಿ ವನ)</h2>
         
         <!-- City Details -->
         <p>
-            <strong style="color: #facc15;">City Name:</strong> <span style="color: #ffffff;">ಕಾವೇರಿ ವನ (Kaveri Vana)</span><br>
+            <strong style="color: #facc15;">City Name:</strong> <span style="color: #ffffff;">Kaveri Vana</span><br>
             <strong style="color: #facc15;">Taluk:</strong> <span style="color: #ffffff;">Mysore</span><br>
             <strong style="color: #facc15;">State:</strong> <span style="color: #ffffff;">Karnataka</span><br>
             <strong style="color: #facc15;">Country:</strong> <span style="color: #ffffff;">India</span><br>
@@ -87,6 +105,8 @@
         </p>
 
         <h2>Land Distribution and Budget</h2>
+
+        <!-- Table -->
         <table>
             <tr>
                 <th>Sr No</th>
@@ -156,6 +176,86 @@
                 <td><strong>₹11,214 Crores</strong></td>
             </tr>
         </table>
+
+        <!-- Bar Graphs for Land Distribution and Budget -->
+        <h2>Visual Representation</h2>
+
+        <!-- Land Distribution Graph -->
+        <h3>Land Distribution</h3>
+        <div class="bar-container">
+            <div class="bar-label">Main Green Spaces</div>
+            <div class="bar" style="--bar-width: 15%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Residential Areas</div>
+            <div class="bar" style="--bar-width: 26%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Commercial Zones</div>
+            <div class="bar" style="--bar-width: 9%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Industrial Areas</div>
+            <div class="bar" style="--bar-width: 5%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Utilities and Services</div>
+            <div class="bar" style="--bar-width: 4%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Tourist Spots</div>
+            <div class="bar" style="--bar-width: 3%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Recreational & Cultural Spaces</div>
+            <div class="bar" style="--bar-width: 3%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Transportation Infrastructure</div>
+            <div class="bar" style="--bar-width: 11%;"></div>
+        </div>
+
+        <!-- Budget Graph -->
+        <h3>Budget Distribution</h3>
+        <div class="bar-container">
+            <div class="bar-label">Main Green Spaces</div>
+            <div class="bar" style="--bar-width: 15%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Residential Areas</div>
+            <div class="bar" style="--bar-width: 26%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Commercial Zones</div>
+            <div class="bar" style="--bar-width: 9%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Industrial Areas</div>
+                        <div class="bar" style="--bar-width: 5%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Utilities and Services</div>
+            <div class="bar" style="--bar-width: 4%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Tourist Spots</div>
+            <div class="bar" style="--bar-width: 3%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Recreational & Cultural Spaces</div>
+            <div class="bar" style="--bar-width: 3%;"></div>
+        </div>
+        <div class="bar-container">
+            <div class="bar-label">Main Transportation Infrastructure</div>
+            <div class="bar" style="--bar-width: 11%;"></div>
+        </div>
+
+        <!-- Conclusion -->
+        <p style="color: #facc15; font-size: 1.2rem;">
+            <strong>Summary:</strong> The land and budget distribution showcases the balanced approach in planning Kaveri Vana. With 15% dedicated to Green Spaces, 26% for Residential Areas, and 11% towards Transportation Infrastructure, the city aims to provide a sustainable and modern urban experience.
+        </p>
+
     </section>
 </body>
 </html>
+
