@@ -3,171 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transportation and Tourism - Business Case</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Smart City Business Cases</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
             margin: 0;
-            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-            color: #ffffff;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
         }
         header {
+            background: linear-gradient(45deg, #4CAF50, #2196F3);
+            color: #fff;
+            padding: 1.5rem 0;
             text-align: center;
-            padding: 2rem;
-            background-color: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         header h1 {
-            font-size: 2.5rem;
             margin: 0;
+            font-size: 2.5rem;
         }
-        section {
-            padding: 2rem;
-            max-width: 800px;
+        .container {
+            width: 90%;
             margin: auto;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
-        section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #06b6d4;
-            padding-bottom: 0.5rem;
-        }
-        section p {
-            margin: 1rem 0;
-            line-height: 1.6;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background-color: #1e293b;
-            color: #ffffff;
-            text-align: left;
-            border-radius: 10px;
             overflow: hidden;
+            max-width: 1200px;
         }
-        table th, table td {
+        .section {
+            background: #fff;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .section:hover {
+            transform: scale(1.02);
+        }
+        h2 {
+            color: #444;
+            font-size: 1.8rem;
+        }
+        h3 {
+            color: #555;
+            font-size: 1.4rem;
+            margin-top: 1rem;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #f1f1f1;
+            margin: 0.75rem 0;
             padding: 1rem;
-            border: 1px solid #ffffff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        table th {
-            background-color: #0ea5e9;
-            color: #ffffff;
+        li i {
+            color: #2196F3;
         }
-        table tr:hover td {
-            background-color: #2563eb;
-            color: #ffffff;
+        a {
+            text-decoration: none;
+            color: #2196F3;
+            font-weight: bold;
         }
-        @media screen and (max-width: 768px) {
-            section {
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #333;
+            color: #fff;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .section {
                 padding: 1rem;
             }
-            table th, table td {
-                padding: 0.5rem;
-                font-size: 0.9rem;
+            h2 {
+                font-size: 1.5rem;
+            }
+            h3 {
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Business Case: Transportation and Tourism</h1>
+        <h1><i class="fas fa-city"></i> Smart City Plan: Business Case Studies</h1>
     </header>
-    <section>
-        <h2>Subtopics and Use Cases</h2>
-        <p>Below are the key use cases with the associated algorithms and their explanations:</p>
 
-        <h3>i. Public Transport Network Design</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Use Case</th>
-                    <th>Code Example</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Minimum Spanning Tree (Kruskal’s Algorithm)</td>
-                    <td>Design cost-efficient public transport routes (bus/train networks).</td>
-                    <td>
-<pre>
-struct Edge {
-    int u, v, weight;
-};
-bool compare(Edge a, Edge b) {
-    return a.weight < b.weight;
-}
-void kruskalMST(vector<Edge>& edges, int n) {
-    sort(edges.begin(), edges.end(), compare);
-    // Implementation continues...
-}
-</pre>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="container">
+        <!-- Transportation and Tourism Section -->
+        <div class="section">
+            <h2><i class="fas fa-bus"></i> Transportation and Tourism</h2>
+            <p>Enhancing city mobility and boosting tourism by implementing efficient algorithms.</p>
+            <h3>Sub-Groups:</h3>
+            <ul>
+                <li>
+                    <i class="fas fa-road"></i>
+                    <strong>Traffic Management:</strong> Using <em>Dijkstra's Algorithm</em> to optimize route planning for reducing congestion. 
+                    This ensures smoother traffic flow and reduces travel time, making urban commuting more efficient and user-friendly. 
+                    <a href="https://github.com/example/traffic-management">View Code</a>
+                </li>
+                <li>
+                    <i class="fas fa-map"></i>
+                    <strong>Tourism Recommendations:</strong> Implementing <em>Tries</em> for location-based suggestions based on keywords and preferences. 
+                    By organizing locations efficiently, this facilitates personalized and relevant travel recommendations tailored to user interests. 
+                    <a href="https://github.com/example/tourism-recommendations">View Code</a>
+                </li>
+                <li>
+                    <i class="fas fa-clock"></i>
+                    <strong>Public Transport Scheduling:</strong> Utilizing <em>Segment Trees</em> to manage real-time scheduling of buses and trains. 
+                    This allows dynamic adjustment of routes based on real-time data to optimize public transport availability and reliability. 
+                    <a href="https://github.com/example/transport-scheduling">View Code</a>
+                </li>
+            </ul>
+        </div>
 
-        <h3>ii. Travel Systems</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Use Case</th>
-                    <th>Code Example</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Boyer-Moore Algorithm</td>
-                    <td>Search for locations, road names, or schedules using text-based inputs.</td>
-                    <td>
-<pre>
-void boyerMooreSearch(string text, string pattern) {
-    int m = pattern.size();
-    int n = text.size();
-    // Preprocess and search logic...
-}
-</pre>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h3>iii. Emergency Response Routes</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Use Case</th>
-                    <th>Code Example</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Breadth-First Search (BFS)</td>
-                    <td>Determine the shortest paths for emergency vehicles.</td>
-                    <td>
-<pre>
-void BFS(int start, vector<vector<int>>& adjList) {
-    queue<int> q;
-    vector<bool> visited(adjList.size(), false);
-    q.push(start);
-    visited[start] = true;
-    // Traverse the graph...
-}
-</pre>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+        <!-- Safety and Security Section -->
+        <div class="section">
+            <h2><i class="fas fa-shield-alt"></i> Safety and Security</h2>
+            <p>Ensuring public safety through proactive monitoring and quick response systems.</p>
+            <h3>Sub-Groups:</h3>
+            <ul>
+                <li>
+                    <i class="fas fa-video"></i>
+                    <strong>Surveillance:</strong> Implementing <em>AVL Trees</em> for managing a dynamic database of surveillance footage. 
+                    This helps in efficiently storing, accessing, and analyzing video data, enhancing security operations. 
+                    <a href="https://github.com/example/surveillance-management">View Code</a>
+                </li>
+                <li>
+                    <i class="fas fa-ambulance"></i>
+                    <strong>Emergency Response:</strong> Using <em>Breadth-First Search (BFS)</em> to find the shortest path for emergency vehicles. 
+                    This ensures rapid deployment of rescue teams and efficient navigation during critical situations. 
+                    <a href="https://github.com/example/emergency-response">View Code</a>
+                </li>
+                <li>
+                    <i class="fas fa-lock"></i>
+                    <strong>Cybersecurity:</strong> Employing <em>KMP Algorithm</em> to detect patterns of cyberattacks in logs efficiently. 
+                    By identifying suspicious activities promptly, this enhances the city's cybersecurity defenses. 
+                    <a href="https://github.com/example/cybersecurity">View Code</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <footer>
-        &copy; 2024 Eranna Patil. All Rights Reserved.
+        <p>Smart City Plan &copy; 2024 | Designed by AI Collaboration</p>
     </footer>
 </body>
 </html>
