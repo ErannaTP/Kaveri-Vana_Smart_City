@@ -31,7 +31,7 @@
             max-width: 1200px;
             margin: auto;
         }
-        section h2 {
+        section h2, h3 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
             border-bottom: 2px solid #06b6d4;
@@ -55,21 +55,21 @@
         }
         .bar-container {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
             margin-bottom: 2rem;
         }
+        .bar-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
         .bar-label {
-            width: 150px;
-            text-align: left;
-            padding-right: 1rem;
+            width: 200px;
         }
         .bar {
-            flex-grow: 1;
-            background-color: #3b82f6;
             height: 20px;
-        }
-        .bar[data-percent] {
-            width: var(--bar-width);
+            margin-left: 10px;
         }
         @media screen and (max-width: 768px) {
             section {
@@ -183,79 +183,76 @@
         <!-- Land Distribution Graph -->
         <h3>Land Distribution</h3>
         <div class="bar-container">
-            <div class="bar-label">Main Green Spaces</div>
-            <div class="bar" style="--bar-width: 15%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Residential Areas</div>
-            <div class="bar" style="--bar-width: 26%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Commercial Zones</div>
-            <div class="bar" style="--bar-width: 9%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Industrial Areas</div>
-            <div class="bar" style="--bar-width: 5%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Utilities and Services</div>
-            <div class="bar" style="--bar-width: 4%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Tourist Spots</div>
-            <div class="bar" style="--bar-width: 3%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Recreational & Cultural Spaces</div>
-            <div class="bar" style="--bar-width: 3%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Transportation Infrastructure</div>
-            <div class="bar" style="--bar-width: 11%;"></div>
+            <div class="bar-item">
+                <span class="bar-label">Main Green Spaces</span>
+                <div class="bar" style="width: 15%; background-color: #3b82f6;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Residential Areas</span>
+                <div class="bar" style="width: 26%; background-color: #06b6d4;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Commercial Zones</span>
+                <div class="bar" style="width: 9%; background-color: #facc15;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Industrial Areas</span>
+                <div class="bar" style="width: 5%; background-color: #ef4444;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Utilities</span>
+                <div class="bar" style="width: 4%; background-color: #22c55e;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Tourist Spots</span>
+                <div class="bar" style="width: 3%; background-color: #f97316;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Recreational Areas</span>
+                <div class="bar" style="width: 3%; background-color: #6366f1;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Transportation</span>
+                <div class="bar" style="width: 11%; background-color: #14b8a6;"></div>
+            </div>
         </div>
 
-        <!-- Budget Graph -->
+        <!-- Budget Distribution Graph -->
         <h3>Budget Distribution</h3>
         <div class="bar-container">
-            <div class="bar-label">Main Green Spaces</div>
-            <div class="bar" style="--bar-width: 15%;"></div>
+            <div class="bar-item">
+                <span class="bar-label">Main Green Spaces</span>
+                <div class="bar" style="width: 15%; background-color: #3b82f6;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Residential Areas</span>
+                <div class="bar" style="width: 26%; background-color: #06b6d4;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Commercial Zones</span>
+                <div class="bar" style="width: 9%; background-color: #facc15;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Industrial Areas</span>
+                <div class="bar" style="width: 5%; background-color: #ef4444;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Utilities</span>
+                <div class="bar" style="width: 4%; background-color: #22c55e;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Tourist Spots</span>
+                <div class="bar" style="width: 3%; background-color: #f97316;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Main Recreational Areas</span>
+                <div class="bar" style="width: 3%; background-color: #6366f1;"></div>
+            </div>
+            <div class="bar-item">
+                <span class="bar-label">Transportation</span>
+                <div class="bar" style="width: 11%; background-color: #14b8a6;"></div>
+            </div>
         </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Residential Areas</div>
-            <div class="bar" style="--bar-width: 26%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Commercial Zones</div>
-            <div class="bar" style="--bar-width: 9%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Industrial Areas</div>
-                        <div class="bar" style="--bar-width: 5%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Utilities and Services</div>
-            <div class="bar" style="--bar-width: 4%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Tourist Spots</div>
-            <div class="bar" style="--bar-width: 3%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Recreational & Cultural Spaces</div>
-            <div class="bar" style="--bar-width: 3%;"></div>
-        </div>
-        <div class="bar-container">
-            <div class="bar-label">Main Transportation Infrastructure</div>
-            <div class="bar" style="--bar-width: 11%;"></div>
-        </div>
-
-        <!-- Conclusion -->
-        <p style="color: #facc15; font-size: 1.2rem;">
-            <strong>Summary:</strong> The land and budget distribution showcases the balanced approach in planning Kaveri Vana. With 15% dedicated to Green Spaces, 26% for Residential Areas, and 11% towards Transportation Infrastructure, the city aims to provide a sustainable and modern urban experience.
-        </p>
-
     </section>
 </body>
 </html>
-
