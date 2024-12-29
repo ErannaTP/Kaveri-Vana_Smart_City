@@ -12,13 +12,12 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            background: url('https://source.unsplash.com/1600x900/?smartcity,technology') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff; /* Text color for light backgrounds */
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            background-color: #000; /* Black background */
+            color: #2196F3; /* Blue text color */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* Adding a subtle shadow for text visibility */
         }
         header {
-            background: rgba(0, 0, 0, 0.6); /* Dark background with partial opacity */
+            background: rgba(0, 0, 0, 0.8); /* Dark overlay over black background */
             color: #fff;
             padding: 1.5rem 0;
             text-align: center;
@@ -46,11 +45,11 @@
             transform: scale(1.02);
         }
         h2 {
-            color: #444;
+            color: #fff;
             font-size: 1.8rem;
         }
         h3 {
-            color: #555;
+            color: #fff;
             font-size: 1.4rem;
             margin-top: 1rem;
         }
@@ -64,7 +63,7 @@
             align-items: center;
             padding: 1rem;
             border-radius: 8px;
-            background: #f1f1f1;
+            background: #333; /* Dark background for each item */
             gap: 0.5rem;
         }
         li i {
@@ -80,7 +79,8 @@
         }
         @media (max-width: 768px) {
             li {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Stack items vertically on smaller screens */
+                gap: 0.5rem;
             }
         }
     </style>
