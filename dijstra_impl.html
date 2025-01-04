@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AVL Tree Surveillance Events</title>
+    <title>Dijkstra Algorithm Implementation</title>
     <style>
         body {
             font-family: 'Times New Roman', serif;
@@ -14,208 +14,126 @@
             text-align: center;
             color: #333;
         }
-        p {
-            margin: 10px 0;
-        }
         pre {
-            background-color: #f5f5f5;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-        th {
             background-color: #f4f4f4;
-        }
-        .output-section {
-            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
 
-<h1>AVL Tree Surveillance Events</h1>
+<h1>Dijkstra Algorithm Implementation</h1>
 
-<p>The following is a C++ implementation for managing and querying events within an AVL tree.</p>
+<h2>Description</h2>
+<p>This is a simple implementation of Dijkstra's algorithm to find the shortest paths from a given starting city to all other cities in a graph. The graph is represented using an unordered map where each city points to a vector of pairs representing neighboring cities and the corresponding distances.</p>
 
-<h2>Code Implementation</h2>
+<h2>Code</h2>
 <pre>
 #include &lt;iostream&gt;
-#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;limits&gt;
 using namespace std;
 
-// AVL Tree Node structure
-struct AVLNode {
-    int timestamp;
-    string eventDetails;
-    int height;
-    AVLNode* left;
-    AVLNode* right;
-};
+const int INF = numeric_limits&lt;int&gt;::max();
 
-// Function to get the height of the node
-int getHeight(AVLNode* node) {
-    if (node == nullptr) return 0;
-    return node->height;
-}
+void dijkstra(const unordered_map&lt;string, vector&lt;pair<string, int&gt;&gt; &amp;graph, const string &amp;startCity) {
+    unordered_map&lt;string, int&gt; distances;
+    unordered_map&lt;string, string&gt; previous;
+    set&lt;pair&lt;int, string&gt;&gt; pq;
 
-// Function to get the balance factor of a node
-int getBalance(AVLNode* node) {
-    if (node == nullptr) return 0;
-    return getHeight(node->left) - getHeight(node->right);
-}
+    // Initialize distances to infinity and set the start city's distance to 0
+    for (const auto &amp;node : graph) {
+        distances[node.first] = INF;
+    }
+    distances[startCity] = 0;
+    pq.insert({0, startCity});
 
-// Right Rotation
-AVLNode* rightRotate(AVLNode* y) {
-    AVLNode* x = y->left;
-    AVLNode* T2 = x->right;
+    while (!pq.empty()) {
+        string currentCity = pq.begin()-&gt;.second;
+        pq.erase(pq.begin());
 
-    x->right = y;
-    y->left = T2;
+        for (const auto &amp;neighbor : graph.at(currentCity)) {
+            string neighborCity = neighbor.first;
+            int weight = neighbor.second;
 
-    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
-    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
-
-    return x;
-}
-
-// Left Rotation
-AVLNode* leftRotate(AVLNode* x) {
-    AVLNode* y = x->right;
-    AVLNode* T2 = y->left;
-
-    y->left = x;
-    x->right = T2;
-
-    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
-    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
-
-    return y;
-}
-
-// Function to create a new AVL Node
-AVLNode* newAVLNode(int timestamp, string eventDetails) {
-    AVLNode* node = new AVLNode();
-    node->timestamp = timestamp;
-    node->eventDetails = eventDetails;
-    node->height = 1;
-    node->left = node->right = nullptr;
-    return node;
-}
-
-// Function to insert a node into AVL Tree
-AVLNode* insertAVL(AVLNode* node, int timestamp, string eventDetails) {
-    if (node == nullptr) return newAVLNode(timestamp, eventDetails);
-
-    if (timestamp < node->timestamp) {
-        node->left = insertAVL(node->left, timestamp, eventDetails);
-    } else if (timestamp > node->timestamp) {
-        node->right = insertAVL(node->right, timestamp, eventDetails);
-    } else {
-        return node; // Duplicate timestamps are not allowed
+            if (distances[currentCity] + weight &lt; distances[neighborCity]) {
+                pq.erase({distances[neighborCity], neighborCity});
+                distances[neighborCity] = distances[currentCity] + weight;
+                pq.insert({distances[neighborCity], neighborCity});
+                previous[neighborCity] = currentCity;
+            }
+        }
     }
 
-    node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+    // Output the shortest paths
+    cout &lt;&lt; "Shortest paths from " &lt;&lt; startCity &lt;&lt; ":\n";
+    for (const auto &amp;entry : distances) {
+        cout &lt;&lt; "To " &lt;&lt; entry.first &lt;&lt; " - Distance: " &lt;&lt; entry.second;
 
-    int balance = getBalance(node);
-
-    // Left Left Case
-    if (balance > 1 && timestamp < node->left->timestamp) {
-        return rightRotate(node);
-    }
-
-    // Right Right Case
-    if (balance < -1 && timestamp > node->right->timestamp) {
-        return leftRotate(node);
-    }
-
-    // Left Right Case
-    if (balance > 1 && timestamp > node->left->timestamp) {
-        node->left = leftRotate(node->left);
-        return rightRotate(node);
-    }
-
-    // Right Left Case
-    if (balance < -1 && timestamp < node->right->timestamp) {
-        node->right = rightRotate(node->right);
-        return leftRotate(node);
-    }
-
-    return node;
-}
-
-// Function to search events in a given range
-void queryAVL(AVLNode* root, int start, int end) {
-    if (root == nullptr) return;
-
-    if (start < root->timestamp) {
-        queryAVL(root->left, start, end);
-    }
-
-    if (start <= root->timestamp && end >= root->timestamp) {
-        cout &lt;&lt; "Timestamp: " &lt;&lt; root->timestamp &lt;&lt; ", Event: " &lt;&lt; root->eventDetails &lt;&lt; endl;
-    }
-
-    if (end > root->timestamp) {
-        queryAVL(root->right, start, end);
+        if (entry.second != INF) {
+            string path = entry.first;
+            string temp = entry.first;
+            while (previous.find(temp) != previous.end()) {
+                temp = previous[temp];
+                path = temp + " -&gt; " + path;
+            }
+            cout &lt;&lt; ", Path: " &lt;&lt; path;
+        }
+        cout &lt;&lt; endl;
     }
 }
 
 int main() {
-    AVLNode* root = nullptr;
+    unordered_map&lt;string, vector&lt;pair&lt;string, int&gt;&gt;&gt; graph = {
+        {"Mysore", {{"Bangalore", 150}, {"Mandya", 45}, {"Coorg", 120}}},
+        {"Bangalore", {{"Mysore", 150}, {"Tumkur", 70}, {"Chennai", 350}, {"Hosur", 50}}},
+        {"Mandya", {{"Mysore", 45}, {"Bangalore", 110}}},
+        {"Tumkur", {{"Bangalore", 70}, {"Davangere", 150}}},
+        {"Chennai", {{"Bangalore", 350}, {"Pondicherry", 160}}},
+        {"Coorg", {{"Mysore", 120}, {"Hassan", 100}}},
+        {"Hosur", {{"Bangalore", 50}, {"Krishnagiri", 40}}},
+        {"Davangere", {{"Tumkur", 150}}},
+        {"Pondicherry", {{"Chennai", 160}}},
+        {"Hassan", {{"Coorg", 100}, {"Chikmagalur", 80}}},
+        {"Krishnagiri", {{"Hosur", 40}}},
+        {"Chikmagalur", {{"Hassan", 80}}}
+    };
 
-    // Adding surveillance events
-    root = insertAVL(root, 1615309200, "Suspicious activity at Gate 1");
-    root = insertAVL(root, 1615312800, "Traffic congestion at Main Square");
-    root = insertAVL(root, 1615316400, "Fire reported near Park Area");
-    root = insertAVL(root, 1615320000, "Unauthorized access to Restricted Zone");
-    root = insertAVL(root, 1615323600, "Earthquake warning issued");
+    string startCity;
+    cout &lt;&lt; "Enter the starting city: ";
+    cin &gt;&gt; startCity;
 
-    cout &lt;&lt; "Surveillance Events between timestamps 1615309200 and 1615317000:\n";
-    queryAVL(root, 1615309200, 1615317000);
+    if (graph.find(startCity) != graph.end()) {
+        dijkstra(graph, startCity);
+    } else {
+        cout &lt;&lt; "City not found in the network." &lt;&lt; endl;
+    }
 
     return 0;
 }
 </pre>
 
-<h2>Surveillance Events</h2>
-<table>
-    <tr>
-        <th>Timestamp</th>
-        <th>Event</th>
-    </tr>
-    <tr>
-        <td>1615309200</td>
-        <td>Suspicious activity at Gate 1</td>
-    </tr>
-    <tr>
-        <td>1615312800</td>
-        <td>Traffic congestion at Main Square</td>
-    </tr>
-    <tr>
-        <td>1615316400</td>
-        <td>Fire reported near Park Area</td>
-    </tr>
-</table>
-
-<div class="output-section">
-    <h2>Output</h2>
-    <p>Surveillance Events between timestamps 1615309200 and 1615317000:</p>
-    <pre>
-    Timestamp: 1615309200, Event: Suspicious activity at Gate 1
-    Timestamp: 1615312800, Event: Traffic congestion at Main Square
-    Timestamp: 1615316400, Event: Fire reported near Park Area
-    </pre>
-</div>
+<h2>Output</h2>
+<p>Enter the starting city: Mysore</p>
+<p>Shortest paths from Mysore:</p>
+<ul>
+    <li>To Mysore - Distance: 0, Path: Mysore</li>
+    <li>To Mandya - Distance: 45, Path: Mysore -> Mandya</li>
+    <li>To Tumkur - Distance: 220, Path: Mysore -> Bangalore -> Tumkur</li>
+    <li>To Krishnagiri - Distance: 240, Path: Mysore -> Bangalore -> Hosur -> Krishnagiri</li>
+    <li>To Chikmagalur - Distance: 300, Path: Mysore -> Coorg -> Hassan -> Chikmagalur</li>
+    <li>To Hosur - Distance: 200, Path: Mysore -> Bangalore -> Hosur</li>
+    <li>To Coorg - Distance: 120, Path: Mysore -> Coorg</li>
+    <li>To Bangalore - Distance: 150, Path: Mysore -> Bangalore</li>
+    <li>To Hassan - Distance: 220, Path: Mysore -> Coorg -> Hassan</li>
+    <li>To Davangere - Distance: 370, Path: Mysore -> Bangalore -> Tumkur -> Davangere</li>
+    <li>To Pondicherry - Distance: 660, Path: Mysore -> Bangalore -> Chennai -> Pondicherry</li>
+    <li>To Chennai - Distance: 500, Path: Mysore -> Bangalore -> Chennai</li>
+</ul>
 
 </body>
 </html>
