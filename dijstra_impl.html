@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVL Tree Surveillance Events</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            margin: 10px 0;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .output-section {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>AVL Tree Surveillance Events</h1>
+
+<p>The following is a C++ implementation for managing and querying events within an AVL tree.</p>
+
+<h2>Code Implementation</h2>
+<pre>
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// AVL Tree Node structure
+struct AVLNode {
+    int timestamp;
+    string eventDetails;
+    int height;
+    AVLNode* left;
+    AVLNode* right;
+};
+
+// Function to get the height of the node
+int getHeight(AVLNode* node) {
+    if (node == nullptr) return 0;
+    return node->height;
+}
+
+// Function to get the balance factor of a node
+int getBalance(AVLNode* node) {
+    if (node == nullptr) return 0;
+    return getHeight(node->left) - getHeight(node->right);
+}
+
+// Right Rotation
+AVLNode* rightRotate(AVLNode* y) {
+    AVLNode* x = y->left;
+    AVLNode* T2 = x->right;
+
+    x->right = y;
+    y->left = T2;
+
+    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
+    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
+
+    return x;
+}
+
+// Left Rotation
+AVLNode* leftRotate(AVLNode* x) {
+    AVLNode* y = x->right;
+    AVLNode* T2 = y->left;
+
+    y->left = x;
+    x->right = T2;
+
+    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
+    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
+
+    return y;
+}
+
+// Function to create a new AVL Node
+AVLNode* newAVLNode(int timestamp, string eventDetails) {
+    AVLNode* node = new AVLNode();
+    node->timestamp = timestamp;
+    node->eventDetails = eventDetails;
+    node->height = 1;
+    node->left = node->right = nullptr;
+    return node;
+}
+
+// Function to insert a node into AVL Tree
+AVLNode* insertAVL(AVLNode* node, int timestamp, string eventDetails) {
+    if (node == nullptr) return newAVLNode(timestamp, eventDetails);
+
+    if (timestamp < node->timestamp) {
+        node->left = insertAVL(node->left, timestamp, eventDetails);
+    } else if (timestamp > node->timestamp) {
+        node->right = insertAVL(node->right, timestamp, eventDetails);
+    } else {
+        return node; // Duplicate timestamps are not allowed
+    }
+
+    node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+
+    int balance = getBalance(node);
+
+    // Left Left Case
+    if (balance > 1 && timestamp < node->left->timestamp) {
+        return rightRotate(node);
+    }
+
+    // Right Right Case
+    if (balance < -1 && timestamp > node->right->timestamp) {
+        return leftRotate(node);
+    }
+
+    // Left Right Case
+    if (balance > 1 && timestamp > node->left->timestamp) {
+        node->left = leftRotate(node->left);
+        return rightRotate(node);
+    }
+
+    // Right Left Case
+    if (balance < -1 && timestamp < node->right->timestamp) {
+        node->right = rightRotate(node->right);
+        return leftRotate(node);
+    }
+
+    return node;
+}
+
+// Function to search events in a given range
+void queryAVL(AVLNode* root, int start, int end) {
+    if (root == nullptr) return;
+
+    if (start < root->timestamp) {
+        queryAVL(root->left, start, end);
+    }
+
+    if (start <= root->timestamp && end >= root->timestamp) {
+        cout &lt;&lt; "Timestamp: " &lt;&lt; root->timestamp &lt;&lt; ", Event: " &lt;&lt; root->eventDetails &lt;&lt; endl;
+    }
+
+    if (end > root->timestamp) {
+        queryAVL(root->right, start, end);
+    }
+}
+
+int main() {
+    AVLNode* root = nullptr;
+
+    // Adding surveillance events
+    root = insertAVL(root, 1615309200, "Suspicious activity at Gate 1");
+    root = insertAVL(root, 1615312800, "Traffic congestion at Main Square");
+    root = insertAVL(root, 1615316400, "Fire reported near Park Area");
+    root = insertAVL(root, 1615320000, "Unauthorized access to Restricted Zone");
+    root = insertAVL(root, 1615323600, "Earthquake warning issued");
+
+    cout &lt;&lt; "Surveillance Events between timestamps 1615309200 and 1615317000:\n";
+    queryAVL(root, 1615309200, 1615317000);
+
+    return 0;
+}
+</pre>
+
+<h2>Surveillance Events</h2>
+<table>
+    <tr>
+        <th>Timestamp</th>
+        <th>Event</th>
+    </tr>
+    <tr>
+        <td>1615309200</td>
+        <td>Suspicious activity at Gate 1</td>
+    </tr>
+    <tr>
+        <td>1615312800</td>
+        <td>Traffic congestion at Main Square</td>
+    </tr>
+    <tr>
+        <td>1615316400</td>
+        <td>Fire reported near Park Area</td>
+    </tr>
+</table>
+
+<div class="output-section">
+    <h2>Output</h2>
+    <p>Surveillance Events between timestamps 1615309200 and 1615317000:</p>
+    <pre>
+    Timestamp: 1615309200, Event: Suspicious activity at Gate 1
+    Timestamp: 1615312800, Event: Traffic congestion at Main Square
+    Timestamp: 1615316400, Event: Fire reported near Park Area
+    </pre>
+</div>
+
+</body>
+</html>
