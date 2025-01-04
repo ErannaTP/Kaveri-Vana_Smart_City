@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourism Trie Exploration</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            margin: 10px 0;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Tourism Trie Exploration</h1>
+
+<p>The following is a C++ implementation for managing tourism recommendations using a Trie data structure.</p>
+
+<h2>Code Implementation</h2>
+<pre>
+#include &lt;iostream&gt;
+#include &lt;unordered_map&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+struct TrieNode {
+    unordered_map<char, TrieNode*> children;
+    vector<string> places;
+};
+
+class Trie {
+private:
+    TrieNode* root;
+
+    TrieNode* createNode() {
+        return new TrieNode();
+    }
+
+public:
+    Trie() {
+        root = createNode();
+    }
+
+    void insert(const string& keyword, const string& place) {
+        TrieNode* current = root;
+        for (char ch : keyword) {
+            if (!current->children[ch]) {
+                current->children[ch] = createNode();
+            }
+            current = current->children[ch];
+        }
+        current->places.push_back(place);
+    }
+
+    vector<string> search(const string& keyword) {
+        TrieNode* current = root;
+        for (char ch : keyword) {
+            if (!current->children[ch]) {
+                return {}; // No matches
+            }
+            current = current->children[ch];
+        }
+        return current->places;
+    }
+};
+
+int main() {
+    Trie tourismTrie;
+
+    // Adding tourist spots near Mysore and Bangalore
+    tourismTrie.insert("heritage", "Mysore Palace");
+    tourismTrie.insert("heritage", "Tipu Sultan's Summer Palace, Srirangapatna");
+    tourismTrie.insert("wildlife", "Mysore Zoo");
+    tourismTrie.insert("wildlife", "Ranganathittu Bird Sanctuary");
+    tourismTrie.insert("spiritual", "Chamundi Hills Temple");
+    tourismTrie.insert("spiritual", "St. Philomena's Church");
+    tourismTrie.insert("nature", "Brindavan Gardens");
+    tourismTrie.insert("nature", "KRS Dam");
+    tourismTrie.insert("heritage", "Bangalore Palace");
+    tourismTrie.insert("heritage", "Lalbagh Botanical Garden, Bangalore");
+    tourismTrie.insert("wildlife", "Bannerghatta National Park");
+    tourismTrie.insert("spiritual", "ISKCON Temple, Bangalore");
+
+    string query;
+    cout &lt;&lt; "Enter a category to explore (e.g., heritage, wildlife, spiritual, nature): ";
+    cin &gt;&gt; query;
+
+    vector<string> recommendations = tourismTrie.search(query);
+    if (!recommendations.empty()) {
+        cout &lt;&lt; "Recommended places for " &lt;&lt; query &lt;&lt; ":\n";
+        for (const string& place : recommendations) {
+            cout &lt;&lt; "- " &lt;&lt; place &lt;&lt; endl;
+        }
+    } else {
+        cout &lt;&lt; "No recommendations found for the category: " &lt;&lt; query &lt;&lt; endl;
+    }
+
+    return 0;
+}
+</pre>
+
+<h2>Tourism Trie Exploration</h2>
+<p>Enter a category to explore (e.g., heritage, wildlife, spiritual, nature): wildlife</p>
+
+<h2>Recommended places for wildlife:</h2>
+<ul>
+    <li>Mysore Zoo</li>
+    <li>Ranganathittu Bird Sanctuary</li>
+    <li>Bannerghatta National Park</li>
+</ul>
+
+</body>
+</html>
