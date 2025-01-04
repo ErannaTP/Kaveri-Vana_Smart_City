@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Segment Tree Example</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
         table {
             width: 50%;
             margin: 20px auto;
@@ -23,167 +27,248 @@
 
 <h2>Segment Tree Example</h2>
 
-<!-- Segment Tree Implementation -->
-<script>
+<div>
+    <h3>Segment Tree Implementation</h3>
+
+    <pre>
+#include <iostream>
+#include <vector>
+#include <climits>
+#include <algorithm>  // For sorting
+using namespace std;
+
 // Segment Tree node structure
-class Node {
-    constructor(minTime, maxTime, allTimes) {
-        this.minTime = minTime;  // Minimum bus arrival time
-        this.maxTime = maxTime;  // Maximum bus arrival time
-        this.allTimes = allTimes;  // List of (City Name, Arrival Time) pairs
-    }
-}
+struct Node {
+    int minTime;  // Minimum bus arrival time
+    int maxTime;  // Maximum bus arrival time
+    vector<pair<string, int>> allTimes;  // List of (City Name, Arrival Time) pairs
+};
 
 // Segment Tree class
 class SegmentTree {
-    constructor(data) {
-        this.data = data;
-        this.n = data.length;
-        this.tree = new Array(4 * this.n);
-        this.build(0, this.n - 1, 1);
-    }
+private:
+    vector<Node> tree;
+    vector<pair<string, int>> data;  // Pair of (City Name, Arrival Time)
+    int n;
 
-    // Building the Segment Tree
-    build(start, end, node) {
-        if (start === end) {
+// Building the Segment Tree
+    void build(int start, int end, int node) {
+        if (start == end) {
             // Leaf node: single element
-            this.tree[node] = new Node(this.data[start].second, this.data[start].second, [this.data[start]]);
+            tree[node] = {data[start].second, data[start].second, {data[start]}};
         } else {
-            let mid = Math.floor((start + end) / 2);
-            this.build(start, mid, 2 * node);          // Left child
-            this.build(mid + 1, end, 2 * node + 1);    // Right child
+            int mid = (start + end) / 2;
+            build(start, mid, 2 * node);          // Left child
+            build(mid + 1, end, 2 * node + 1);    // Right child
 
             // Internal node: combine results from children
-            let leftChild = this.tree[2 * node];
-            let rightChild = this.tree[2 * node + 1];
+            tree[node].minTime = min(tree[2 * node].minTime, tree[2 * node + 1].minTime);
+            tree[node].maxTime = max(tree[2 * node].maxTime, tree[2 * node + 1].maxTime);
 
-            this.tree[node] = new Node(
-                Math.min(leftChild.minTime, rightChild.minTime),
-                Math.max(leftChild.maxTime, rightChild.maxTime),
-                [...leftChild.allTimes, ...rightChild.allTimes]
-            );
+            // Combine all city times from left and right child
+            tree[node].allTimes.insert(tree[node].allTimes.end(),
+                                       tree[2 * node].allTimes.begin(),
+                                       tree[2 * node].allTimes.end());
+            tree[node].allTimes.insert(tree[node].allTimes.end(),
+                                       tree[2 * node + 1].allTimes.begin(),
+                                       tree[2 * node + 1].allTimes.end());
 
             // Sort and remove duplicates
-            this.tree[node].allTimes.sort((a, b) => a.second - b.second);
-            this.tree[node].allTimes = this.tree[node].allTimes.filter(
-                (value, index, self) => self.findIndex(t => t.first === value.first && t.second === value.second) === index
-            );
+            sort(tree[node].allTimes.begin(), tree[node].allTimes.end(),
+                 [](pair<string, int> a, pair<string, int> b) {
+                     return a.second < b.second;
+                 });
+            auto last = unique(tree[node].allTimes.begin(), tree[node].allTimes.end(),
+                              [](pair<string, int> a, pair<string, int> b) {
+                                  return a.first == b.first && a.second == b.second;
+                              });
+            tree[node].allTimes.erase(last, tree[node].allTimes.end());
         }
     }
 
     // Query function
-    query(start, end, node, left, right) {
+    Node query(int start, int end, int node, int left, int right) {
         if (right < start || end < left) {
-            return new Node(Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, []);
+            return {INT_MAX, INT_MIN, {}};  // Out of range
         }
         if (left <= start && end <= right) {
-            return this.tree[node];
+            return tree[node];  // Fully in range
         }
 
-        let mid = Math.floor((start + end) / 2);
-        let leftResult = this.query(start, mid, 2 * node, left, right);
-        let rightResult = this.query(mid + 1, end, 2 * node + 1, left, right);
+        int mid = (start + end) / 2;
+        Node leftResult = query(start, mid, 2 * node, left, right);
+        Node rightResult = query(mid + 1, end, 2 * node + 1, left, right);
 
-        let result = new Node(
-            Math.min(leftResult.minTime, rightResult.minTime),
-            Math.max(leftResult.maxTime, rightResult.maxTime),
-            [...leftResult.allTimes, ...rightResult.allTimes]
-        );
+        Node result;
+        result.minTime = min(leftResult.minTime, rightResult.minTime);
+        result.maxTime = max(leftResult.maxTime, rightResult.maxTime);
 
-        result.allTimes.sort((a, b) => a.second - b.second);
-        result.allTimes = result.allTimes.filter(
-            (value, index, self) => self.findIndex(t => t.first === value.first && t.second === value.second) === index
-        );
+        // Combine and sort times from both sides
+        result.allTimes.insert(result.allTimes.end(),
+                               leftResult.allTimes.begin(),
+                               leftResult.allTimes.end());
+        result.allTimes.insert(result.allTimes.end(),
+                               rightResult.allTimes.begin(),
+                               rightResult.allTimes.end());
+        sort(result.allTimes.begin(), result.allTimes.end(),
+             [](pair<string, int> a, pair<string, int> b) {
+                 return a.second < b.second;
+             });
+
+        // Remove duplicates
+        auto last = unique(result.allTimes.begin(), result.allTimes.end(),
+                          [](pair<string, int> a, pair<string, int> b) {
+                              return a.first == b.first && a.second == b.second;
+                          });
+        result.allTimes.erase(last, result.allTimes.end());
 
         return result;
     }
 
     // Update function
-    update(start, end, node, index, value) {
-        if (start === end) {
+    void update(int start, int end, int node, int index, int value) {
+        if (start == end) {
             // Leaf node: update the single element
-            if (this.data[index].second !== value) {  // Only update if value changes
-                this.data[index].second = value;
-                this.tree[node] = new Node(value, value, [this.data[index]]);
+            if (data[index].second != value) {  // Only update if value changes
+                data[index].second = value;
+                tree[node] = {value, value, {data[index]}};
             }
         } else {
-            let mid = Math.floor((start + end) / 2);
+            int mid = (start + end) / 2;
             if (index <= mid) {
-                this.update(start, mid, 2 * node, index, value);       // Update left child
+                update(start, mid, 2 * node, index, value);       // Update left child
             } else {
-                this.update(mid + 1, end, 2 * node + 1, index, value); // Update right child
+                update(mid + 1, end, 2 * node + 1, index, value); // Update right child
             }
 
             // After update, recombine the results
-            let leftChild = this.tree[2 * node];
-            let rightChild = this.tree[2 * node + 1];
+            tree[node].minTime = min(tree[2 * node].minTime, tree[2 * node + 1].minTime);
+            tree[node].maxTime = max(tree[2 * node].maxTime, tree[2 * node + 1].maxTime);
 
-            this.tree[node] = new Node(
-                Math.min(leftChild.minTime, rightChild.minTime),
-                Math.max(leftChild.maxTime, rightChild.maxTime),
-                [...leftChild.allTimes, ...rightChild.allTimes]
-            );
+            // Combine and sort times from left and right
+            tree[node].allTimes.insert(tree[node].allTimes.end(),
+                                       tree[2 * node].allTimes.begin(),
+                                       tree[2 * node].allTimes.end());
+            tree[node].allTimes.insert(tree[node].allTimes.end(),
+                                       tree[2 * node + 1].allTimes.begin(),
+                                       tree[2 * node + 1].allTimes.end());
+            sort(tree[node].allTimes.begin(), tree[node].allTimes.end(),
+                 [](pair<string, int> a, pair<string, int> b) {
+                     return a.second < b.second;
+                 });
 
-            // Sort and remove duplicates
-            this.tree[node].allTimes.sort((a, b) => a.second - b.second);
-            this.tree[node].allTimes = this.tree[node].allTimes.filter(
-                (value, index, self) => self.findIndex(t => t.first === value.first && t.second === value.second) === index
-            );
+            // Remove duplicates
+            auto last = unique(tree[node].allTimes.begin(), tree[node].allTimes.end(),
+                              [](pair<string, int> a, pair<string, int> b) {
+                                  return a.first == b.first && a.second == b.second;
+                              });
+            tree[node].allTimes.erase(last, tree[node].allTimes.end());
         }
     }
 
-    queryWrapper(left, right) {
-        return this.query(0, this.n - 1, 1, left, right);
+public:
+    SegmentTree(vector<pair<string, int>> &arr) {
+        n = arr.size();
+        data = arr;
+        tree.resize(4 * n);  // Allocate space for segment tree
+        build(0, n - 1, 1);  // Initialize the tree
     }
 
-    updateWrapper(index, value) {
-        this.update(0, this.n - 1, 1, index, value);
+    Node query(int left, int right) {
+        return query(0, n - 1, 1, left, right);
     }
-}
 
-window.onload = function() {
-    let busSchedules = [
-        { first: "Mysore Central", second: 10 },
-        { first: "K.R. Nagar", second: 15 },
-        { first: "H.D. Kote", second: 20 },
-        { first: "Nanjangud", second: 25 },
-        { first: "Chamundi Hill", second: 30 },
-        { first: "Hunsur", second: 35 },
-        { first: "Gonikoppal", second: 40 },
-        { first: "Shreeramapura", second: 45 },
-        { first: "Periyapatna", second: 50 },
-        { first: "Mandya", second: 55 }
-    ];
-
-    let segTree = new SegmentTree(busSchedules);
-
-    // Displaying the initial bus schedules
-    displaySchedules(segTree.queryWrapper(0, busSchedules.length - 1).allTimes);
-
-    // Update bus arrival time for "Periyapatna"
-    document.getElementById("updateButton").addEventListener("click", function() {
-        segTree.updateWrapper(8, 42);
-        displaySchedules(segTree.queryWrapper(0, busSchedules.length - 1).allTimes);
-    });
-
-    function displaySchedules(times) {
-        let table = document.getElementById("scheduleTable");
-        let output = "<tr><th>City</th><th>Arrival Time</th></tr>";
-        times.forEach(function(time) {
-            output += `<tr><td>${time.first}</td><td>${time.second}</td></tr>`;
-        });
-        table.innerHTML = output;
+    void update(int index, int value) {
+        update(0, n - 1, 1, index, value);
     }
 };
-</script>
 
-<!-- HTML Table for displaying schedules -->
-<table id="scheduleTable">
-    <!-- Data will be dynamically injected here -->
-</table>
+int main() {
+    // Example data: Cities with bus arrival times from a source city
+    vector<pair<string, int>> busSchedules = {
+        {"Mysore Central", 10}, {"K.R. Nagar", 15}, {"H.D. Kote", 20},
+        {"Nanjangud", 25}, {"Chamundi Hill", 30}, {"Hunsur", 35},
+        {"Gonikoppal", 40}, {"Shreeramapura", 45}, {"Periyapatna", 50},
+        {"Mandya", 55}
+    };
 
-<!-- Button to trigger update -->
-<button id="updateButton">Update</button>
+    SegmentTree segTree(busSchedules);
+
+    // Displaying the initial bus schedules
+    cout << "Initial Bus Schedules:\n";
+    cout << "----------------------------------------\n";
+    cout << "| City           | Arrival Time |\n";
+    cout << "----------------------------------------\n";
+    for (auto &time : segTree.query(0, busSchedules.size() - 1).allTimes) {
+        cout << "| " << time.first << " | " << time.second << " |\n";
+    }
+    cout << "----------------------------------------\n";
+
+    // Update bus arrival time for "Periyapatna"
+    segTree.update(8, 42);
+
+    // Displaying updated bus schedules
+    cout << "\nUpdated Bus Schedules:\n";
+    cout << "----------------------------------------\n";
+    cout << "| City           | Arrival Time |\n";
+    cout << "----------------------------------------\n";
+    for (auto &time : segTree.query(0, busSchedules.size() - 1).allTimes) {
+        cout << "| " << time.first << " | " << time.second << " |\n";
+    }
+    cout << "----------------------------------------\n";
+
+    return 0;
+}
+    </pre>
+
+    <h3>Output:</h3>
+    <table>
+        <tr>
+            <th>City</th>
+            <th>Arrival Time</th>
+        </tr>
+        <tr>
+            <td>Mysore Central</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>K.R. Nagar</td>
+            <td>15</td>
+        </tr>
+        <tr>
+            <td>H.D. Kote</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>Nanjangud</td>
+            <td>25</td>
+        </tr>
+        <tr>
+            <td>Chamundi Hill</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>Hunsur</td>
+            <td>35</td>
+        </tr>
+        <tr>
+            <td>Gonikoppal</td>
+            <td>40</td>
+        </tr>
+        <tr>
+            <td>Shreeramapura</td>
+            <td>45</td>
+        </tr>
+        <tr>
+            <td>Periyapatna</td>
+            <td>42</td>
+        </tr>
+        <tr>
+            <td>Mandya</td>
+            <td>55</td>
+        </tr>
+    </table>
+</div>
 
 </body>
 </html>
