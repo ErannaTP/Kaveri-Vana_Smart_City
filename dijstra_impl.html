@@ -3,137 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dijkstra Algorithm Implementation</title>
+    <title>Segment Tree Example - Bus Schedules</title>
     <style>
-        body {
-            font-family: 'Times New Roman', serif;
-            line-height: 1.6;
-            margin: 20px;
+        table {
+            width: 70%;
+            margin: 20px auto;
+            border-collapse: collapse;
         }
-        h1 {
-            text-align: center;
-            color: #333;
+        table, th, td {
+            border: 1px solid black;
         }
-        pre {
-            background-color: #f4f4f4;
+        th, td {
             padding: 10px;
-            border-radius: 5px;
-            margin: 20px 0;
+            text-align: left;
         }
     </style>
 </head>
 <body>
 
-<h1>Dijkstra Algorithm Implementation</h1>
+<h2>Segment Tree Example</h2>
 
-<h2>Description</h2>
-<p>This is a simple implementation of Dijkstra's algorithm to find the shortest paths from a given starting city to all other cities in a graph. The graph is represented using an unordered map where each city points to a vector of pairs representing neighboring cities and the corresponding distances.</p>
+<p>This example demonstrates a Segment Tree to manage and query bus arrival times across various cities.</p>
 
-<h2>Code</h2>
-<pre>
-#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;unordered_map&gt;
-#include &lt;set&gt;
-#include &lt;limits&gt;
-using namespace std;
+<div>
+    <h3>Segment Tree Implementation</h3>
 
-const int INF = numeric_limits&lt;int&gt;::max();
+    <pre>
+    #include &lt;iostream&gt;
+    #include &lt;vector&gt;
+    #include &lt;climits&gt;
+    #include &lt;algorithm&gt;  // For sorting
+    using namespace std;
 
-void dijkstra(const unordered_map&lt;string, vector&lt;pair<string, int&gt;&gt; &amp;graph, const string &amp;startCity) {
-    unordered_map&lt;string, int&gt; distances;
-    unordered_map&lt;string, string&gt; previous;
-    set&lt;pair&lt;int, string&gt;&gt; pq;
-
-    // Initialize distances to infinity and set the start city's distance to 0
-    for (const auto &amp;node : graph) {
-        distances[node.first] = INF;
-    }
-    distances[startCity] = 0;
-    pq.insert({0, startCity});
-
-    while (!pq.empty()) {
-        string currentCity = pq.begin()-&gt;.second;
-        pq.erase(pq.begin());
-
-        for (const auto &amp;neighbor : graph.at(currentCity)) {
-            string neighborCity = neighbor.first;
-            int weight = neighbor.second;
-
-            if (distances[currentCity] + weight &lt; distances[neighborCity]) {
-                pq.erase({distances[neighborCity], neighborCity});
-                distances[neighborCity] = distances[currentCity] + weight;
-                pq.insert({distances[neighborCity], neighborCity});
-                previous[neighborCity] = currentCity;
-            }
-        }
-    }
-
-    // Output the shortest paths
-    cout &lt;&lt; "Shortest paths from " &lt;&lt; startCity &lt;&lt; ":\n";
-    for (const auto &amp;entry : distances) {
-        cout &lt;&lt; "To " &lt;&lt; entry.first &lt;&lt; " - Distance: " &lt;&lt; entry.second;
-
-        if (entry.second != INF) {
-            string path = entry.first;
-            string temp = entry.first;
-            while (previous.find(temp) != previous.end()) {
-                temp = previous[temp];
-                path = temp + " -&gt; " + path;
-            }
-            cout &lt;&lt; ", Path: " &lt;&lt; path;
-        }
-        cout &lt;&lt; endl;
-    }
-}
-
-int main() {
-    unordered_map&lt;string, vector&lt;pair&lt;string, int&gt;&gt;&gt; graph = {
-        {"Mysore", {{"Bangalore", 150}, {"Mandya", 45}, {"Coorg", 120}}},
-        {"Bangalore", {{"Mysore", 150}, {"Tumkur", 70}, {"Chennai", 350}, {"Hosur", 50}}},
-        {"Mandya", {{"Mysore", 45}, {"Bangalore", 110}}},
-        {"Tumkur", {{"Bangalore", 70}, {"Davangere", 150}}},
-        {"Chennai", {{"Bangalore", 350}, {"Pondicherry", 160}}},
-        {"Coorg", {{"Mysore", 120}, {"Hassan", 100}}},
-        {"Hosur", {{"Bangalore", 50}, {"Krishnagiri", 40}}},
-        {"Davangere", {{"Tumkur", 150}}},
-        {"Pondicherry", {{"Chennai", 160}}},
-        {"Hassan", {{"Coorg", 100}, {"Chikmagalur", 80}}},
-        {"Krishnagiri", {{"Hosur", 40}}},
-        {"Chikmagalur", {{"Hassan", 80}}}
+    // Segment Tree node structure
+    struct Node {
+        int minTime;  // Minimum bus arrival time
+        int maxTime;  // Maximum bus arrival time
+        vector&lt;pair&lt;string, int&gt;&gt; allTimes;  // List of (City Name, Arrival Time) pairs
     };
 
-    string startCity;
-    cout &lt;&lt; "Enter the starting city: ";
-    cin &gt;&gt; startCity;
+    // Segment Tree class
+    class SegmentTree {
+    private:
+        vector&lt;Node&gt; tree;
+        vector&lt;pair&lt;string, int&gt;&gt; data;  // Pair of (City Name, Arrival Time)
+        int n;
 
-    if (graph.find(startCity) != graph.end()) {
-        dijkstra(graph, startCity);
-    } else {
-        cout &lt;&lt; "City not found in the network." &lt;&lt; endl;
+        // Building the Segment Tree
+        void build(int start, int end, int node) {
+            if (start == end) {
+                // Leaf node: single element
+                tree[node] = {data[start].second, data[start].second, {data[start]}};
+            } else {
+                int mid = (start + end) / 2;
+                build(start, mid, 2 * node);          // Left child
+                build(mid + 1, end, 2 * node + 1);    // Right child
+
+                // Internal node: combine results from children
+                tree[node].minTime = min(tree[2 * node].minTime, tree[2 * node + 1].minTime);
+                tree[node].maxTime = max(tree[2 * node].maxTime, tree[2 * node + 1].maxTime);
+
+                // Combine all city times from left and right child
+                tree[node].allTimes.insert(tree[node].allTimes.end(),
+                                           tree[2 * node].allTimes.begin(),
+                                           tree[2 * node].allTimes.end());
+                tree[node].allTimes.insert(tree[node].allTimes.end(),
+                                           tree[2 * node + 1].allTimes.begin(),
+                                           tree[2 * node + 1].allTimes.end());
+
+                // Sort and remove duplicates
+                sort(tree[node].allTimes.begin(), tree[node].allTimes.end(),
+                     [](pair&lt;string, int&gt; a, pair&lt;string, int&gt; b) {
+                         return a.second < b.second;
+                     });
+                auto last = unique(tree[node].allTimes.begin(), tree[node].allTimes.end(),
+                                  [](pair&lt;string, int&gt; a, pair&lt;string, int&gt; b) {
+                                      return a.first == b.first && a.second == b.second;
+                                  });
+                tree[node].allTimes.erase(last, tree[node].allTimes.end());
+            }
+        }
+
+        // Query function
+        Node query(int start, int end, int node, int left, int right) {
+            if (right < start || end < left) {
+                return {INT_MAX, INT_MIN, {}};  // Out of range
+            }
+            if (left <= start && end <= right) {
+                return tree[node];  // Fully in range
+            }
+
+            int mid = (start + end) / 2;
+            Node leftResult = query(start, mid, 2 * node, left, right);
+            Node rightResult = query(mid + 1, end, 2 * node + 1, left, right);
+
+            Node result;
+            result.minTime = min(leftResult.minTime, rightResult.minTime);
+            result.maxTime = max(leftResult.maxTime, rightResult.maxTime);
+
+            // Combine and sort times from both sides
+            result.allTimes.insert(result.allTimes.end(),
+                                   leftResult.allTimes.begin(),
+                                   leftResult.allTimes.end());
+            result.allTimes.insert(result.allTimes.end(),
+                                   rightResult.allTimes.begin(),
+                                   rightResult.allTimes.end());
+            sort(result.allTimes.begin(), result.allTimes.end(),
+                 [](pair&lt;string, int&gt; a, pair&lt;string, int&gt; b) {
+                     return a.second < b.second;
+                 });
+
+            // Remove duplicates
+            auto last = unique(result.allTimes.begin(), result.allTimes.end(),
+                              [](pair&lt;string, int&gt; a, pair&lt;string, int&gt; b) {
+                                  return a.first == b.first && a.second == b.second;
+                              });
+            result.allTimes.erase(last, result.allTimes.end());
+
+            return result;
+        }
+
+        // Update function
+        void update(int start, int end, int node, int index, int value) {
+            if (start == end) {
+                // Leaf node: update the single element
+                if (data[index].second != value) {  // Only update if value changes
+                    data[index].second = value;
+                    tree[node] = {value, value, {data[index]}};
+                }
+            } else {
+                int mid = (start + end) / 2;
+                if (index <= mid) {
+                    update(start, mid, 2 * node, index, value);       // Update left child
+                } else {
+                    update(mid + 1, end, 2 * node + 1, index, value); // Update right child
+                }
+
+                // After update, recombine the results
+                tree[node].minTime = min(tree[2 * node].minTime, tree[2 * node + 1].minTime);
+                tree[node].maxTime = max(tree[2 * node].maxTime, tree[2 * node + 1].maxTime);
+
+                // Combine and sort times from left and right
+                tree[node].allTimes.insert(tree[node].allTimes.end(),
+                                           tree[2 * node].allTimes.begin(),
+                                           tree[2 * node].allTimes.end());
+                tree[node].allTimes.insert(tree[node].allTimes.end(),
+                                           tree[2 * node + 1].allTimes.begin(),
+                                           tree[2 * node + 1].allTimes.end());
+                sort(tree[node].allTimes.begin(), tree[node].allTimes.end(),
+                     [](pair&lt;string, int&gt; a, pair&lt;string, int&gt; b) {
+                         return a.second < b.second;
+                     });
+
+                // Remove duplicates
+                auto last = unique(tree[node].allTimes.begin(), tree[node].allTimes.end(),
+                                  [](pair&lt;string, int&gt; a, pair&lt;string, int&gt; b) {
+                                      return a.first == b.first && a.second == b.second;
+                                  });
+                tree[node].allTimes.erase(last, tree[node].allTimes.end());
+            }
+        }
+
+    public:
+        SegmentTree(vector&lt;pair&lt;string, int&gt;&gt; &arr) {
+            n = arr.size();
+            data = arr;
+            tree.resize(4 * n);  // Allocate space for segment tree
+            build(0, n - 1, 1);  // Initialize the tree
+        }
+
+        Node query(int left, int right) {
+            return query(0, n - 1, 1, left, right);
+        }
+
+        void update(int index, int value) {
+            update(0, n - 1, 1, index, value);
+        }
+    };
+
+    int main() {
+        // Example data: Cities with bus arrival times from a source city
+        vector&lt;pair&lt;string, int&gt;&gt; busSchedules = {
+            {"Mysore Central", 10}, {"K.R. Nagar", 15}, {"H.D. Kote", 20},
+            {"Nanjangud", 25}, {"Chamundi Hill", 30}, {"Hunsur", 35},
+            {"Gonikoppal", 40}, {"Shreeramapura", 45}, {"Periyapatna", 50},
+            {"Mandya", 55}
+        };
+
+        SegmentTree segTree(busSchedules);
+
+        // Displaying the initial bus schedules
+        cout &lt;&lt; "Initial Bus Schedules:\n";
+        cout &lt;&lt; "----------------------------------------\n";
+        cout &lt;&lt; "| City           | Arrival Time |\n";
+        cout &lt;&lt; "----------------------------------------\n";
+        for (auto &time : segTree.query(0, busSchedules.size() - 1).allTimes) {
+            cout &lt;&lt; "| " &lt;&lt; time.first &lt;&lt; " | " &lt;&lt; time.second &lt;&lt; " |\n";
+        }
+        cout &lt;&lt; "----------------------------------------\n";
+
+        // Update bus arrival time for "Periyapatna"
+        segTree.update(8, 42);
+
+        // Displaying updated bus schedules
+        cout &lt;&lt; "\nUpdated Bus Schedules:\n";
+        cout &lt;&lt; "----------------------------------------\n";
+        cout &lt;&lt; "| City           | Arrival Time |\n";
+        cout &lt;&lt; "----------------------------------------\n";
+        for (auto &time : segTree.query(0, busSchedules.size() - 1).allTimes) {
+            cout &lt;&lt; "| " &lt;&lt; time.first &lt;&lt; " | " &lt;&lt; time.second &lt;&lt; " |\n";
+        }
+        cout &lt;&lt; "----------------------------------------\n";
+
+        return 0;
     }
-
-    return 0;
-}
-</pre>
-
-<h2>Output</h2>
-<p>Enter the starting city: Mysore</p>
-<p>Shortest paths from Mysore:</p>
-<ul>
-    <li>To Mysore - Distance: 0, Path: Mysore</li>
-    <li>To Mandya - Distance: 45, Path: Mysore -> Mandya</li>
-    <li>To Tumkur - Distance: 220, Path: Mysore -> Bangalore -> Tumkur</li>
-    <li>To Krishnagiri - Distance: 240, Path: Mysore -> Bangalore -> Hosur -> Krishnagiri</li>
-    <li>To Chikmagalur - Distance: 300, Path: Mysore -> Coorg -> Hassan -> Chikmagalur</li>
-    <li>To Hosur - Distance: 200, Path: Mysore -> Bangalore -> Hosur</li>
-    <li>To Coorg - Distance: 120, Path: Mysore -> Coorg</li>
-    <li>To Bangalore - Distance: 150, Path: Mysore -> Bangalore</li>
-    <li>To Hassan - Distance: 220, Path: Mysore -> Coorg -> Hassan</li>
-    <li>To Davangere - Distance: 370, Path: Mysore -> Bangalore -> Tumkur -> Davangere</li>
-    <li>To Pondicherry - Distance: 660, Path: Mysore -> Bangalore -> Chennai -> Pondicherry</li>
-    <li>To Chennai - Distance: 500, Path: Mysore -> Bangalore -> Chennai</li>
-</ul>
+    </pre>
+</div>
 
 </body>
 </html>
