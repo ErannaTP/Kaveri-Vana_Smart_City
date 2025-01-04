@@ -3,239 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tourism Trie Exploration and Bus Schedules</title>
+    <title>Segment Tree Example</title>
     <style>
-        body {
-            font-family: 'Times New Roman', serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        h1, h2 {
-            text-align: center;
-            color: #333;
-        }
-        p {
-            margin: 10px 0;
-        }
-        pre {
-            background-color: #f5f5f5;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
         table {
-            width: 100%;
+            width: 50%;
+            margin: 20px auto;
             border-collapse: collapse;
-            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid black;
         }
         th, td {
             padding: 10px;
-            border: 1px solid #ddd;
             text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
         }
     </style>
 </head>
 <body>
 
-<h1>Tourism Trie Exploration</h1>
+<h2>Segment Tree Example</h2>
 
-<p>The following is a C++ implementation for managing tourism recommendations using a Trie data structure.</p>
-
-<h2>Code Implementation</h2>
-<pre>
-#include &lt;iostream&gt;
-#include &lt;unordered_map&gt;
-#include &lt;vector&gt;
-using namespace std;
-
-struct TrieNode {
-    unordered_map<char, TrieNode*> children;
-    vector<string> places;
-};
-
-class Trie {
-private:
-    TrieNode* root;
-
-    TrieNode* createNode() {
-        return new TrieNode();
+<!-- Segment Tree Implementation -->
+<script>
+// Segment Tree node structure
+class Node {
+    constructor(minTime, maxTime, allTimes) {
+        this.minTime = minTime;  // Minimum bus arrival time
+        this.maxTime = maxTime;  // Maximum bus arrival time
+        this.allTimes = allTimes;  // List of (City Name, Arrival Time) pairs
     }
-
-public:
-    Trie() {
-        root = createNode();
-    }
-
-    void insert(const string& keyword, const string& place) {
-        TrieNode* current = root;
-        for (char ch : keyword) {
-            if (!current->children[ch]) {
-                current->children[ch] = createNode();
-            }
-            current = current->children[ch];
-        }
-        current->places.push_back(place);
-    }
-
-    vector<string> search(const string& keyword) {
-        TrieNode* current = root;
-        for (char ch : keyword) {
-            if (!current->children[ch]) {
-                return {}; // No matches
-            }
-            current = current->children[ch];
-        }
-        return current->places;
-    }
-};
-
-int main() {
-    Trie tourismTrie;
-
-    // Adding tourist spots near Mysore and Bangalore
-    tourismTrie.insert("heritage", "Mysore Palace");
-    tourismTrie.insert("heritage", "Tipu Sultan's Summer Palace, Srirangapatna");
-    tourismTrie.insert("wildlife", "Mysore Zoo");
-    tourismTrie.insert("wildlife", "Ranganathittu Bird Sanctuary");
-    tourismTrie.insert("spiritual", "Chamundi Hills Temple");
-    tourismTrie.insert("spiritual", "St. Philomena's Church");
-    tourismTrie.insert("nature", "Brindavan Gardens");
-    tourismTrie.insert("nature", "KRS Dam");
-    tourismTrie.insert("heritage", "Bangalore Palace");
-    tourismTrie.insert("heritage", "Lalbagh Botanical Garden, Bangalore");
-    tourismTrie.insert("wildlife", "Bannerghatta National Park");
-    tourismTrie.insert("spiritual", "ISKCON Temple, Bangalore");
-
-    string query;
-    cout &lt;&lt; "Enter a category to explore (e.g., heritage, wildlife, spiritual, nature): ";
-    cin &gt;&gt; query;
-
-    vector<string> recommendations = tourismTrie.search(query);
-    if (!recommendations.empty()) {
-        cout &lt;&lt; "Recommended places for " &lt;&lt; query &lt;&lt; ":\n";
-        for (const string& place : recommendations) {
-            cout &lt;&lt; "- " &lt;&lt; place &lt;&lt; endl;
-        }
-    } else {
-        cout &lt;&lt; "No recommendations found for the category: " &lt;&lt; query &lt;&lt; endl;
-    }
-
-    return 0;
 }
-</pre>
 
-<h2>Tourism Trie Exploration</h2>
-<p>Enter a category to explore (e.g., heritage, wildlife, spiritual, nature): wildlife</p>
+// Segment Tree class
+class SegmentTree {
+    constructor(data) {
+        this.data = data;
+        this.n = data.length;
+        this.tree = new Array(4 * this.n);
+        this.build(0, this.n - 1, 1);
+    }
 
-<h2>Recommended places for wildlife:</h2>
-<ul>
-    <li>Mysore Zoo</li>
-    <li>Ranganathittu Bird Sanctuary</li>
-    <li>Bannerghatta National Park</li>
-</ul>
+    // Building the Segment Tree
+    build(start, end, node) {
+        if (start === end) {
+            // Leaf node: single element
+            this.tree[node] = new Node(this.data[start].second, this.data[start].second, [this.data[start]]);
+        } else {
+            let mid = Math.floor((start + end) / 2);
+            this.build(start, mid, 2 * node);          // Left child
+            this.build(mid + 1, end, 2 * node + 1);    // Right child
 
-<h2>Initial Bus Schedules:</h2>
-<table>
-    <tr>
-        <th>City</th>
-        <th>Arrival Time</th>
-    </tr>
-    <tr>
-        <td>Mysore Central</td>
-        <td>10</td>
-    </tr>
-    <tr>
-        <td>K.R. Nagar</td>
-        <td>15</td>
-    </tr>
-    <tr>
-        <td>H.D. Kote</td>
-        <td>20</td>
-    </tr>
-    <tr>
-        <td>Nanjangud</td>
-        <td>25</td>
-    </tr>
-    <tr>
-        <td>Chamundi Hill</td>
-        <td>30</td>
-    </tr>
-    <tr>
-        <td>Hunsur</td>
-        <td>35</td>
-    </tr>
-    <tr>
-        <td>Gonikoppal</td>
-        <td>40</td>
-    </tr>
-    <tr>
-        <td>Shreeramapura</td>
-        <td>45</td>
-    </tr>
-    <tr>
-        <td>Periyapatna</td>
-        <td>50</td>
-    </tr>
-    <tr>
-        <td>Mandya</td>
-        <td>55</td>
-    </tr>
+            // Internal node: combine results from children
+            let leftChild = this.tree[2 * node];
+            let rightChild = this.tree[2 * node + 1];
+
+            this.tree[node] = new Node(
+                Math.min(leftChild.minTime, rightChild.minTime),
+                Math.max(leftChild.maxTime, rightChild.maxTime),
+                [...leftChild.allTimes, ...rightChild.allTimes]
+            );
+
+            // Sort and remove duplicates
+            this.tree[node].allTimes.sort((a, b) => a.second - b.second);
+            this.tree[node].allTimes = this.tree[node].allTimes.filter(
+                (value, index, self) => self.findIndex(t => t.first === value.first && t.second === value.second) === index
+            );
+        }
+    }
+
+    // Query function
+    query(start, end, node, left, right) {
+        if (right < start || end < left) {
+            return new Node(Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, []);
+        }
+        if (left <= start && end <= right) {
+            return this.tree[node];
+        }
+
+        let mid = Math.floor((start + end) / 2);
+        let leftResult = this.query(start, mid, 2 * node, left, right);
+        let rightResult = this.query(mid + 1, end, 2 * node + 1, left, right);
+
+        let result = new Node(
+            Math.min(leftResult.minTime, rightResult.minTime),
+            Math.max(leftResult.maxTime, rightResult.maxTime),
+            [...leftResult.allTimes, ...rightResult.allTimes]
+        );
+
+        result.allTimes.sort((a, b) => a.second - b.second);
+        result.allTimes = result.allTimes.filter(
+            (value, index, self) => self.findIndex(t => t.first === value.first && t.second === value.second) === index
+        );
+
+        return result;
+    }
+
+    // Update function
+    update(start, end, node, index, value) {
+        if (start === end) {
+            // Leaf node: update the single element
+            if (this.data[index].second !== value) {  // Only update if value changes
+                this.data[index].second = value;
+                this.tree[node] = new Node(value, value, [this.data[index]]);
+            }
+        } else {
+            let mid = Math.floor((start + end) / 2);
+            if (index <= mid) {
+                this.update(start, mid, 2 * node, index, value);       // Update left child
+            } else {
+                this.update(mid + 1, end, 2 * node + 1, index, value); // Update right child
+            }
+
+            // After update, recombine the results
+            let leftChild = this.tree[2 * node];
+            let rightChild = this.tree[2 * node + 1];
+
+            this.tree[node] = new Node(
+                Math.min(leftChild.minTime, rightChild.minTime),
+                Math.max(leftChild.maxTime, rightChild.maxTime),
+                [...leftChild.allTimes, ...rightChild.allTimes]
+            );
+
+            // Sort and remove duplicates
+            this.tree[node].allTimes.sort((a, b) => a.second - b.second);
+            this.tree[node].allTimes = this.tree[node].allTimes.filter(
+                (value, index, self) => self.findIndex(t => t.first === value.first && t.second === value.second) === index
+            );
+        }
+    }
+
+    queryWrapper(left, right) {
+        return this.query(0, this.n - 1, 1, left, right);
+    }
+
+    updateWrapper(index, value) {
+        this.update(0, this.n - 1, 1, index, value);
+    }
+}
+
+window.onload = function() {
+    let busSchedules = [
+        { first: "Mysore Central", second: 10 },
+        { first: "K.R. Nagar", second: 15 },
+        { first: "H.D. Kote", second: 20 },
+        { first: "Nanjangud", second: 25 },
+        { first: "Chamundi Hill", second: 30 },
+        { first: "Hunsur", second: 35 },
+        { first: "Gonikoppal", second: 40 },
+        { first: "Shreeramapura", second: 45 },
+        { first: "Periyapatna", second: 50 },
+        { first: "Mandya", second: 55 }
+    ];
+
+    let segTree = new SegmentTree(busSchedules);
+
+    // Displaying the initial bus schedules
+    displaySchedules(segTree.queryWrapper(0, busSchedules.length - 1).allTimes);
+
+    // Update bus arrival time for "Periyapatna"
+    document.getElementById("updateButton").addEventListener("click", function() {
+        segTree.updateWrapper(8, 42);
+        displaySchedules(segTree.queryWrapper(0, busSchedules.length - 1).allTimes);
+    });
+
+    function displaySchedules(times) {
+        let table = document.getElementById("scheduleTable");
+        let output = "<tr><th>City</th><th>Arrival Time</th></tr>";
+        times.forEach(function(time) {
+            output += `<tr><td>${time.first}</td><td>${time.second}</td></tr>`;
+        });
+        table.innerHTML = output;
+    }
+};
+</script>
+
+<!-- HTML Table for displaying schedules -->
+<table id="scheduleTable">
+    <!-- Data will be dynamically injected here -->
 </table>
 
-<h2>Updated Bus Schedules:</h2>
-<table>
-    <tr>
-        <th>City</th>
-        <th>Arrival Time</th>
-    </tr>
-    <tr>
-        <td>Mysore Central</td>
-        <td>10</td>
-    </tr>
-    <tr>
-        <td>K.R. Nagar</td>
-        <td>15</td>
-    </tr>
-    <tr>
-        <td>H.D. Kote</td>
-        <td>20</td>
-    </tr>
-    <tr>
-        <td>Nanjangud</td>
-        <td>25</td>
-    </tr>
-    <tr>
-        <td>Chamundi Hill</td>
-        <td>30</td>
-    </tr>
-    <tr>
-        <td>Hunsur</td>
-        <td>35</td>
-    </tr>
-    <tr>
-        <td>Gonikoppal</td>
-        <td>40</td>
-    </tr>
-    <tr>
-        <td>Periyapatna</td>
-        <td>42</td>
-    </tr>
-    <tr>
-        <td>Shreeramapura</td>
-        <td>45</td>
-    </tr>
-    <tr>
-        <td>Periyapatna</td>
-        <td>50</td>
-    </tr>
-    <tr>
-        <td>Mandya</td>
-        <td>55</td>
-    </tr>
-</table>
+<!-- Button to trigger update -->
+<button id="updateButton">Update</button>
 
 </body>
 </html>
